@@ -1,2 +1,0 @@
-select Partnership, DateSold from tblPropertyInformation Where Partnership = '105th Street Associates, LLC'
-Update tblPropertyInformation set DateSold = null Where Partnership = '105th Street Associates, LLC'
