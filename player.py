@@ -1,6 +1,3 @@
-# Visit pyGuru on youtube
-# pip install pygame
-
 import os
 import pickle
 import tkinter as tk
@@ -28,8 +25,8 @@ class Player(tk.Frame):
 
 		self.create_frames()
 		self.track_widgets()
-		self.control_widgets()
-		#self.tracklist_widgets()
+		# self.control_widgets()
+		# self.tracklist_widgets()
   #endregion
   
     #region CREATE_FRAMES
@@ -44,25 +41,25 @@ class Player(tk.Frame):
 		# self.tracklist = tk.LabelFrame(self, text=f'PlayList - {str(len(self.playlist))}',
 		# 					font=("times new roman",15,"bold"),
 		# 					bg="grey",fg="white",bd=5,relief=tk.GROOVE)
-		# self.tracklist.config(width=150,height=400)
+		# self.tracklist.config(width=190,height=400)
 		# self.tracklist.grid(row=0, column=1, rowspan=3, pady=5)
 
-		self.controls = tk.LabelFrame(self,
-							font=("Comic Sans MS",15,"bold"),
-							bg="white",fg="white",bd=2,relief=tk.GROOVE)
-		self.controls.config(width=1000,height=500)
-		self.controls.grid(row=10, column=10, pady=5, padx=10)
+		# self.controls = tk.LabelFrame(self,
+		# 					font=("times new roman",15,"bold"),
+		# 					bg="white",fg="white",bd=2,relief=tk.GROOVE)
+		# self.controls.config(width=410,height=80)
+		# self.controls.grid(row=2, column=0, pady=5, padx=10)
     #endregion
 	
     #region TRACK_WIDGETS
 	def track_widgets(self):
     #  CHANGE THE CANVAS SIZE
 		self.canvas = tk.Label(self.track, image=img)
-		self.canvas.configure(width=525, height=400)
+		self.canvas.configure(width=600, height=400)
 		self.canvas.grid(row=0,column=0)
 
 		self.songtrack = tk.Label(self.track, font=("times new roman",16,"bold"),
-						bg="pink",fg="dark blue")
+						bg="white",fg="dark blue")
 		self.songtrack['text'] = 'C.R.I.N.G.E Music Player V5'
 		self.songtrack.config(width=30, height=1)
 		self.songtrack.grid(row=1,column=0,padx=10)
@@ -97,19 +94,19 @@ class Player(tk.Frame):
 		self.slider.grid(row=0, column=4, padx=5)
 	#endregion
 	#region TRACKLIST_WIDGETS
-	# def tracklist_widgets(self):
-    #     #PLAYLIST
-	# 	self.scrollbar = tk.Scrollbar(self.tracklist, orient=tk.VERTICAL)
-	# 	self.scrollbar.grid(row=0,column=1, rowspan=5, sticky='ns')
+	def tracklist_widgets(self):
+        #PLAYLIST
+		self.scrollbar = tk.Scrollbar(self.tracklist, orient=tk.VERTICAL)
+		self.scrollbar.grid(row=0,column=1, rowspan=5, sticky='ns')
 
-	# 	self.list = tk.Listbox(self.tracklist, selectmode=tk.SINGLE,
-	# 				 yscrollcommand=self.scrollbar.set, selectbackground='sky blue')
-	# 	self.enumerate_songs()
-	# 	self.list.config(height=22)
-	# 	self.list.bind('<Double-1>', self.play_song) 
+		self.list = tk.Listbox(self.tracklist, selectmode=tk.SINGLE,
+					 yscrollcommand=self.scrollbar.set, selectbackground='sky blue')
+		self.enumerate_songs()
+		self.list.config(height=22)
+		self.list.bind('<Double-1>', self.play_song) 
 
-	# 	self.scrollbar.config(command=self.list.yview)
-	# 	self.list.grid(row=0, column=0, rowspan=5)
+		self.scrollbar.config(command=self.list.yview)
+		self.list.grid(row=0, column=0, rowspan=5)
     #endregion
     #region RETRIEVE SONGS
 	def retrieve_songs(self):
@@ -135,7 +132,8 @@ class Player(tk.Frame):
 		for index, song in enumerate(self.playlist):
 			self.list.insert(index, os.path.basename(song))
 	#endregion
-	#region SONG CONTROL
+#region SONG CONTROL
+    #region PLAY_SONG
 	def play_song(self, event=None):
 		if event is not None:
 			self.current = self.list.curselection()[0]
@@ -154,6 +152,7 @@ class Player(tk.Frame):
 		self.list.itemconfigure(self.current, bg='sky blue')
 
 		mixer.music.play()
+    #endregion
 	#region PAUSE SONG	
 	def pause_song(self):
 		if not self.paused:
@@ -167,7 +166,7 @@ class Player(tk.Frame):
 			mixer.music.unpause()
 			self.pause['image'] = play
 	#endregion
-	
+	#region PREV_SONG
 	def prev_song(self):
 		if self.current > 0:
 			self.current -= 1
@@ -175,7 +174,8 @@ class Player(tk.Frame):
 			self.current = 0
 		self.list.itemconfigure(self.current + 1, bg='white')
 		self.play_song()
-
+    #endregion
+    #region NEXT_SONG
 	def next_song(self):
 		if self.current < len(self.playlist) - 1:
 			self.current += 1
@@ -183,32 +183,10 @@ class Player(tk.Frame):
 			self.current = 0
 		self.list.itemconfigure(self.current - 1, bg='white')
 		self.play_song()
-
+    #endregion
+    #region CHANGE_VOLUME
 	def change_volume(self, event=None):
 		self.v = self.volume.get()
 		mixer.music.set_volume(self.v / 10)
-  #endregion
-
-#region Main
-# ----------------------------- Main -------------------------------------------
-
-root = tk.Tk()
-# Dimensions of app
-
-width= root.winfo_screenwidth() 
-height= root.winfo_screenheight()
-
-root.geometry("%dx%d" % (width, height))
-
-# Title on top right of app window
-root.wm_title('CRINGE')
-
-img = PhotoImage(file='Pictures/Logo.png')
-next_ = PhotoImage(file = 'images/next.gif')
-prev = PhotoImage(file='images/previous.gif')
-play = PhotoImage(file='images/play.gif')
-pause = PhotoImage(file='images/pause.gif')
-
-app = Player(master=root)
-app.mainloop()
+    #endregion
 #endregion
