@@ -4,6 +4,9 @@
 import os
 import pickle
 import tkinter as tk
+from tkinter import *
+from tkinter import ttk
+from ttkthemes import ThemedTk
 from tkinter import filedialog
 from tkinter import PhotoImage
 from pygame import mixer
@@ -35,9 +38,17 @@ class Player(tk.Frame):
     #region CREATE_FRAMES
 	def create_frames(self):
     #  CREATES ALL OF THE FRAMES
-		self.track = tk.LabelFrame(self, text='Song Track', 
-					font=("Comic Sans MS",15,"bold"),
-					bg="pink",fg="blue",bd=5,relief=tk.GROOVE)
+		s = ttk.Style()
+		s.theme_use('clam')
+		s.configure(
+			"TLabelframe",
+			foreground = "yellow",
+			background="black",
+		)
+		label1 = tk.Label(root, text='Track: ', fg='dark blue',
+                 bg='#FFF59E', font=("Gotham Medium typeface",16,"bold"))
+		self.track = ttk.LabelFrame(self, style = "TLabelframe", labelwidget = label1)
+		# self.track.config(font = "Helvetica", fontsize=12)
 		self.track.config(width=1000,height=500)
 		self.track.grid(row=5, column=10, padx=10)
 
@@ -46,10 +57,9 @@ class Player(tk.Frame):
 		# 					bg="grey",fg="white",bd=5,relief=tk.GROOVE)
 		# self.tracklist.config(width=150,height=400)
 		# self.tracklist.grid(row=0, column=1, rowspan=3, pady=5)
-
-		self.controls = tk.LabelFrame(self,
-							font=("Comic Sans MS",15,"bold"),
-							bg="white",fg="white",bd=2,relief=tk.GROOVE)
+  
+		label2 = tk.Label(root, bg = 'black')
+		self.controls = ttk.LabelFrame(self, labelwidget=label2)
 		self.controls.config(width=1000,height=500)
 		self.controls.grid(row=10, column=10, pady=5, padx=10)
     #endregion
@@ -61,8 +71,8 @@ class Player(tk.Frame):
 		self.canvas.configure(width=525, height=400)
 		self.canvas.grid(row=0,column=0)
 
-		self.songtrack = tk.Label(self.track, font=("times new roman",16,"bold"),
-						bg="pink",fg="dark blue")
+		self.songtrack = tk.Label(self.track, font=("Gotham Medium typeface",16,"bold"),
+						bg="#FFF59E",fg="dark blue")
 		self.songtrack['text'] = 'C.R.I.N.G.E Music Player V5'
 		self.songtrack.config(width=30, height=1)
 		self.songtrack.grid(row=1,column=0,padx=10)
@@ -203,7 +213,7 @@ root.geometry("%dx%d" % (width, height))
 # Title on top right of app window
 root.wm_title('CRINGE')
 
-img = PhotoImage(file='Pictures/Logo.png')
+img = PhotoImage(file='images/Logo.png')
 next_ = PhotoImage(file = 'images/next.gif')
 prev = PhotoImage(file='images/previous.gif')
 play = PhotoImage(file='images/play.gif')
