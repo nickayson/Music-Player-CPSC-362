@@ -8,6 +8,34 @@ from tkinter import filedialog
 from tkinter import PhotoImage
 from pygame import mixer
 
+'''
+THINGS TO DO:
+Home page
+	- fix gap above buttons
+
+Volume slider buttons and formatting
+	- just need button commands/functions
+
+Change play buttons and everything
+
+Make song scaler at bottom
+
+Make Login Page
+ 
+Make Library Page
+
+Make Queue Page
+'''
+
+'''
+NOTES:
+
+we could use ttk.Progressbar for the song scaler --> https://docs.python.org/3/library/tkinter.ttk.html 
+theres a weird gap above all the labels? not sure why or how to fix it
+-ashley
+
+'''
+
 class Player(tk.Frame): 
     #region INIT
 	def __init__(self, master=None):
@@ -31,6 +59,7 @@ class Player(tk.Frame):
 		self.control_widgets()
 		self.volume_widgets()
 		#self.tracklist_widgets()
+		self.nav_widgets()
   #endregion
   
     #region CREATE_FRAMES
@@ -65,6 +94,11 @@ class Player(tk.Frame):
 		self.volumew = ttk.LabelFrame(self, labelwidget=label3)
 		self.volumew.config(width=500,height=1000)
 		self.volumew.grid(row=5, column=15, pady=5, padx=10)
+
+		label4 = tk.Label(root, bg='black')
+		self.nav = ttk.LabelFrame(self, labelwidget=label4)
+		self.nav.config(width=500,height=1000)
+		self.nav.grid(row=5, column=0, pady=5, padx=10)
     #endregion
 	
     #region TRACK_WIDGETS
@@ -101,17 +135,44 @@ class Player(tk.Frame):
 		self.next['command'] = self.next_song
 		self.next.grid(row=0, column=3)	
 	#endregion
+
 	#region VOLUME_WIDGET
 	def volume_widgets(self):
-	    #VOLUME
+
+	    #VOLUME SLIDER
 		self.volume = tk.DoubleVar(self)
-		self.slider = tk.Scale(self.volumew, from_ = 0, to = 10)
+		self.slider = tk.Scale(self.volumew, from_ = 10, to = 0) #from_ x = top value, to x = bottom value
 		self.slider['variable'] = self.volume
 		self.slider.set(8)
 		mixer.music.set_volume(0.8)
 		self.slider['command'] = self.change_volume
-		self.slider.grid(row=0, column=4, padx=5)
+		self.slider.grid(row=1, column=5, padx=5)
+
+		#VOLUME UP 
+		self.volUp = tk.Button(self.volumew, bg='black', fg='white', font=10)
+		self.volUp['text'] = 'Volume Up'
+		# self.volUp['command'] = self.increaseVolume   #need to create function
+		self.volUp.grid(row=0, column=5, pady=10, ipadx=10) #ipadx is a bandaid fix to make the vol up/downs the same width, couldn't get columnspan to work
+
+		#VOLUME DOWN 
+		self.volDown = tk.Button(self.volumew, bg='black', fg='white', font=10)
+		self.volDown['text'] = 'Volume Down'
+		# self.volDown['command'] = self.decreaseVolume   #need to create function
+		self.volDown.grid(row=3, column=5, pady=10)
+
+		#MUTE
+		self.mute = tk.Button(self.volumew, bg='black', fg='white', font=10)
+		self.mute['text'] = 'Mute'
+		# self.volDown['command'] = self.muteVolume   #need to create function
+		self.mute.grid(row=4, column=5, pady=5)
+
+		#VOLUME #
+		self.volNum = tk.Button(self.volumew, bg='black', fg='white', font=10)
+		self.volNum['text'] = 'Volume #' # '#' is placeholder for number input
+		# self.volDown['command'] = self.setVolume   #need to create function
+		self.volNum.grid(row=5, column=5, pady=5)
 	#endregion
+
 	#region TRACKLIST_WIDGETS
 	# def tracklist_widgets(self):
     #     #PLAYLIST
@@ -127,6 +188,7 @@ class Player(tk.Frame):
 	# 	self.scrollbar.config(command=self.list.yview)
 	# 	self.list.grid(row=0, column=0, rowspan=5)
     #endregion
+
     #region RETRIEVE SONGS
 	def retrieve_songs(self):
     	
@@ -146,11 +208,13 @@ class Player(tk.Frame):
 		self.list.delete(0, tk.END)
 		self.enumerate_songs()
 	#endregion
+
 	#region ENUMERATE SONGS
 	def enumerate_songs(self):
 		for index, song in enumerate(self.playlist):
 			self.list.insert(index, os.path.basename(song))
 	#endregion
+
 	#region SONG CONTROL
 	def play_song(self, event=None):
 		if event is not None:
@@ -170,6 +234,7 @@ class Player(tk.Frame):
 		self.list.itemconfigure(self.current, bg='sky blue')
 
 		mixer.music.play()
+
 	#region PAUSE SONG	
 	def pause_song(self):
 		if not self.paused:
@@ -203,6 +268,42 @@ class Player(tk.Frame):
 	def change_volume(self, event=None):
 		self.v = self.volume.get()
 		mixer.music.set_volume(self.v / 10)
+  #endregion
+
+  #region HOME BUTTON
+	def nav_widgets(self):
+		#HOME
+		self.homePage = tk.Button(self.nav, bg='black', fg='white', font=10)
+		self.homePage['text'] = 'Home'
+		# self.homePage['command'] = self.go_home
+		self.homePage.grid(row=0, column=0, padx=10, pady=10)
+
+		#HELP
+		self.helpPage = tk.Button(self.nav, bg='black', fg='white', font=10)
+		self.helpPage['text'] = 'Help'
+		# self.helpPage['command'] = self.go_help
+		self.helpPage.grid(row=1, column=0, padx=10, pady=5)
+
+		#LIBRARY
+		self.libPage = tk.Button(self.nav, bg='black', fg='white', font=10)
+		self.libPage['text'] = 'Library'
+		# self.libPage['command'] = self.go_lib
+		self.libPage.grid(row=2, column=0, padx=10, pady=5)
+
+
+		#QUEUE
+		self.queuePage = tk.Button(self.nav, bg='black', fg='white', font=10)
+		self.queuePage['text'] = 'Queue'
+		# self.queuePage['command'] = self.go_queue
+		self.queuePage.grid(row=3, column=0, padx=10, pady=5)
+
+		#PROFILE
+		self.profPage = tk.Button(self.nav, bg='black', fg='white', font=10)
+		self.profPage['text'] = 'Profile'
+		# self.queuePage['command'] = self.go_queue
+		self.profPage.grid(row=4, column=0, padx=10, pady=5)
+
+	
   #endregion
 
 #variables called into main
