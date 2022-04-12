@@ -143,7 +143,7 @@ class Player(tk.Frame):
 		self.volume = tk.DoubleVar(self)
 		self.slider = tk.Scale(self.volumew, from_ = 10, to = 0) #from_ x = top value, to x = bottom value
 		self.slider['variable'] = self.volume
-		self.slider.set(8)
+		self.volume.set(8)
 		mixer.music.set_volume(0.8)
 		self.slider['command'] = self.change_volume
 		self.slider.grid(row=1, column=5, padx=5)
@@ -151,25 +151,25 @@ class Player(tk.Frame):
 		#VOLUME UP 
 		self.volUp = tk.Button(self.volumew, bg='black', fg='white', font=10)
 		self.volUp['text'] = 'Volume Up'
-		# self.volUp['command'] = self.increaseVolume   #need to create function
+		self.volUp['command'] = self.increase_volume
 		self.volUp.grid(row=0, column=5, pady=10, ipadx=10) #ipadx is a bandaid fix to make the vol up/downs the same width, couldn't get columnspan to work
 
 		#VOLUME DOWN 
 		self.volDown = tk.Button(self.volumew, bg='black', fg='white', font=10)
 		self.volDown['text'] = 'Volume Down'
-		# self.volDown['command'] = self.decreaseVolume   #need to create function
+		self.volDown['command'] = self.decrease_volume
 		self.volDown.grid(row=3, column=5, pady=10)
 
 		#MUTE
 		self.mute = tk.Button(self.volumew, bg='black', fg='white', font=10)
 		self.mute['text'] = 'Mute'
-		# self.volDown['command'] = self.muteVolume   #need to create function
+		self.mute['command'] = self.mute_volume   #need to create function
 		self.mute.grid(row=4, column=5, pady=5)
 
 		#VOLUME #
 		self.volNum = tk.Button(self.volumew, bg='black', fg='white', font=10)
 		self.volNum['text'] = 'Volume #' # '#' is placeholder for number input
-		# self.volDown['command'] = self.setVolume   #need to create function
+		# self.volDown['command'] = self.set_volume   #need to create function
 		self.volNum.grid(row=5, column=5, pady=5)
 	#endregion
 
@@ -264,10 +264,35 @@ class Player(tk.Frame):
 			self.current = 0
 		self.list.itemconfigure(self.current - 1, bg='white')
 		self.play_song()
-
+  
+	def increase_volume(self, event=None):
+		self.v = self.volume.get() + 1
+		if self.v >= 10.0:
+			self.v = 10.0
+			mixer.music.set_volume((self.v)/10)
+		self.volume.set(self.v)
+		mixer.music.set_volume((self.v - 1)/10)
+		print(self.v)
+  
+	def decrease_volume(self, event=None):
+		self.v = self.volume.get() - 1
+		if self.v <= 0.0:
+			self.v = 0.0
+			mixer.music.set_volume((self.v)/10)
+		self.volume.set(self.v)
+		mixer.music.set_volume((self.v + 1)/10)
+		print(self.v)
+  
 	def change_volume(self, event=None):
 		self.v = self.volume.get()
 		mixer.music.set_volume(self.v / 10)
+		print(self.v)
+  
+	def mute_volume(self, event=None):
+		self.v = 0.0
+		self.volume.set(self.v)
+		mixer.music.set_volume(self.v / 10)
+		print(self.v)
   #endregion
 
   #region HOME BUTTON
