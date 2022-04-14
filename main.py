@@ -1,4 +1,3 @@
-# Visit pyGuru on youtube
 # pip install pygame
 
 import os
@@ -26,6 +25,10 @@ root.geometry("%dx%d" % (width, height))
 # Title on top right of app window
 root.wm_title('CRINGE')
 
+root['bg'] = 'black'
+
 app = Player(master=root)
+app['bg'] = 'black'
 app.mainloop()
 #endregion
+

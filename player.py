@@ -35,7 +35,7 @@ theres a weird gap above all the labels? not sure why or how to fix it
 -ashley
 
 '''
-
+muted = FALSE
 class Player(tk.Frame): 
     #region INIT
 	def __init__(self, master=None):
@@ -72,8 +72,7 @@ class Player(tk.Frame):
 			foreground = "yellow",
 			background="black",
 		)
-		label1 = tk.Label(root, text='Track: ', fg='dark blue',
-                 bg='#FFF59E', font=("Gotham Medium typeface",16,"bold"))
+		label1 = tk.Label(root, bg = 'black')
 		self.track = ttk.LabelFrame(self, style = "TLabelframe", labelwidget = label1)
 		# self.track.config(font = "Helvetica", fontsize=12)
 		self.track.config(width=1000,height=500)
@@ -139,11 +138,12 @@ class Player(tk.Frame):
 	#region VOLUME_WIDGET
 	def volume_widgets(self):
 		
-		self.globalvolume = tk.DoubleVar(self)
+		style = ttk.Style()
+		style.theme_use('clam')
 
 	    #VOLUME SLIDER
 		self.volume = tk.DoubleVar(self)
-		self.slider = tk.Scale(self.volumew, from_ = 10, to = 0) #from_ x = top value, to x = bottom value
+		self.slider = tk.Scale(self.volumew, from_ = 10, to = 0, bg = 'black', fg = 'white' ) #from_ x = top value, to x = bottom value
 		self.slider['variable'] = self.volume
 		self.volume.set(8)
 		mixer.music.set_volume(0.8)
@@ -151,25 +151,33 @@ class Player(tk.Frame):
 		self.slider.grid(row=1, column=5, padx=5)
 
 		#VOLUME UP 
-		self.volUp = tk.Button(self.volumew, bg='black', fg='white', font=10)
+		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
+		style.map('TButton', background=[('active','white')])
+		self.volUp = ttk.Button(self.volumew)
 		self.volUp['text'] = 'Volume Up'
 		self.volUp['command'] = self.increase_volume
 		self.volUp.grid(row=0, column=5, pady=10, ipadx=10) #ipadx is a bandaid fix to make the vol up/downs the same width, couldn't get columnspan to work
 
 		#VOLUME DOWN 
-		self.volDown = tk.Button(self.volumew, bg='black', fg='white', font=10)
+		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
+		style.map('TButton', background=[('active','white')])
+		self.volDown = ttk.Button(self.volumew)
 		self.volDown['text'] = 'Volume Down'
 		self.volDown['command'] = self.decrease_volume
 		self.volDown.grid(row=3, column=5, pady=10)
 
 		#MUTE
-		self.mute = tk.Button(self.volumew, bg='black', fg='white', font=10)
+		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
+		style.map('TButton', background=[('active','white')])
+		self.mute = ttk.Button(self.volumew)
 		self.mute['text'] = 'Mute'
 		self.mute['command'] = self.mute_volume   #need to create function
 		self.mute.grid(row=4, column=5, pady=5)
 
-		#VOLUME #
-		self.volNum = tk.Button(self.volumew, bg='black', fg='white', font=10)
+		#VOLUME
+		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
+		style.map('TButton', background=[('active','white')])
+		self.volNum = ttk.Button(self.volumew)
 		self.volNum['text'] = 'Volume #' # '#' is placeholder for number input
 		# self.volDown['command'] = self.set_volume   #need to create function
 		self.volNum.grid(row=5, column=5, pady=5)
@@ -306,51 +314,90 @@ class Player(tk.Frame):
 #         scale.set(0)
 #         muted = TRUE
 	def mute_volume(self, event=None):
-		self.v = 0.0
-		self.v2 = 8.0
-		self.v3 = self.volume.get()
-		if self.v2 == 0.0 and self.v == 0.0:
-			self.volume.set(self.v3)
-			mixer.music.set_volume(self.v3 / 10)
-		self.volume.set(self.v)
-		mixer.music.set_volume(self.v / 10)
+		global muted
+		self.v = self.volume.get()
+		if muted:  # Unmute the music
+			self.volume.set(self.v)
+			mixer.music.set_volume(self.v / 10)
+			muted = FALSE
+		else:	# mute the music
+			self.v = 0.0
+			self.volume.set(self.v)
+			mixer.music.set_volume(self.v / 10)
+			muted = TRUE
 		print(self.v)
   #endregion
 
   #region HOME BUTTON
 	def nav_widgets(self):
+		style = ttk.Style()
+		style.theme_use('clam')
+
 		#HOME
-		self.homePage = tk.Button(self.nav, bg='black', fg='white', font=10)
+		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
+		style.map('TButton', background=[('active','white')])
+		self.homePage = ttk.Button(self.nav)
 		self.homePage['text'] = 'Home'
 		# self.homePage['command'] = self.go_home
 		self.homePage.grid(row=0, column=0, padx=10, pady=10)
 
 		#HELP
-		self.helpPage = tk.Button(self.nav, bg='black', fg='white', font=10)
+		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
+		style.map('TButton', background=[('active','white')])
+		self.helpPage = ttk.Button(self.nav, command = self.openHelpWindow)
 		self.helpPage['text'] = 'Help'
 		# self.helpPage['command'] = self.go_help
 		self.helpPage.grid(row=1, column=0, padx=10, pady=5)
 
 		#LIBRARY
-		self.libPage = tk.Button(self.nav, bg='black', fg='white', font=10)
+		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
+		style.map('TButton', background=[('active','white')])
+		self.libPage = ttk.Button(self.nav, command = self.openLibraryWindow)
 		self.libPage['text'] = 'Library'
 		# self.libPage['command'] = self.go_lib
 		self.libPage.grid(row=2, column=0, padx=10, pady=5)
 
 
 		#QUEUE
-		self.queuePage = tk.Button(self.nav, bg='black', fg='white', font=10)
+		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
+		style.map('TButton', background=[('active','white')])
+		self.queuePage = ttk.Button(self.nav, command = self.openQueueWindow)
 		self.queuePage['text'] = 'Queue'
-		# self.queuePage['command'] = self.go_queue
 		self.queuePage.grid(row=3, column=0, padx=10, pady=5)
 
 		#PROFILE
-		self.profPage = tk.Button(self.nav, bg='black', fg='white', font=10)
+		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
+		style.map('TButton', background=[('active','white')])
+		self.profPage = ttk.Button(self.nav)
 		self.profPage['text'] = 'Profile'
 		# self.queuePage['command'] = self.go_queue
-		self.profPage.grid(row=4, column=0, padx=10, pady=5)
-
+		self.profPage.grid(row=4, column=0, padx=10, pady=5)	
+  #endregion
+  
+  #region NEW WINDOWS
+	# function to open a Queue Window
+	def openQueueWindow(self):
+		QueueWindow = Toplevel(root)
+		QueueWindow.title("Queue")
+		width= root.winfo_screenwidth() 
+		height= root.winfo_screenheight()
+		QueueWindow.geometry("%dx%d" % (width, height))
+  
+	# function to open a Library Window
+	def openLibraryWindow(self):
+		LibraryWindow = Toplevel(root)
+		LibraryWindow.title("Library")
+		width= root.winfo_screenwidth() 
+		height= root.winfo_screenheight()
+		LibraryWindow.geometry("%dx%d" % (width, height))
 	
+	# function to open a Help Window
+	def openHelpWindow(self):
+		HelpWindow = Toplevel(root)
+		HelpWindow.title("Library")
+		width= root.winfo_screenwidth() 
+		height= root.winfo_screenheight()
+		HelpWindow.geometry("%dx%d" % (width, height))
   #endregion
 
 #variables called into main
