@@ -290,6 +290,21 @@ class Player(tk.Frame):
 		mixer.music.set_volume(self.v / 10)
 		print(self.v)
   
+#   muted = FALSE
+
+
+# def mute_music():
+#     global muted
+#     if muted:  # Unmute the music
+#         mixer.music.set_volume(0.7)
+#         volumeBtn.configure(image=volumePhoto)
+#         scale.set(70)
+#         muted = FALSE
+#     else:  # mute the music
+#         mixer.music.set_volume(0)
+#         volumeBtn.configure(image=mutePhoto)
+#         scale.set(0)
+#         muted = TRUE
 	def mute_volume(self, event=None):
 		self.v = 0.0
 		self.v2 = 8.0
