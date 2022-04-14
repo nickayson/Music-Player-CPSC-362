@@ -138,6 +138,8 @@ class Player(tk.Frame):
 
 	#region VOLUME_WIDGET
 	def volume_widgets(self):
+		
+		self.globalvolume = tk.DoubleVar(self)
 
 	    #VOLUME SLIDER
 		self.volume = tk.DoubleVar(self)
@@ -290,6 +292,11 @@ class Player(tk.Frame):
   
 	def mute_volume(self, event=None):
 		self.v = 0.0
+		self.v2 = 8.0
+		self.v3 = self.volume.get()
+		if self.v2 == 0.0 and self.v == 0.0:
+			self.volume.set(self.v3)
+			mixer.music.set_volume(self.v3 / 10)
 		self.volume.set(self.v)
 		mixer.music.set_volume(self.v / 10)
 		print(self.v)
