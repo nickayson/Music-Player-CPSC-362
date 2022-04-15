@@ -65,24 +65,29 @@ class Player(tk.Frame):
     #region CREATE_FRAMES
 	def create_frames(self):
     #  CREATES ALL OF THE FRAMES
-		s = ttk.Style()
-		s.theme_use('clam')
-		s.configure(
-			"TLabelframe",
-			foreground = "yellow",
-			background="black",
+		s1 = ttk.Style()
+		s1.theme_use('clam')
+		s1.configure(
+			'TLabelframe',
+			foreground = 'yellow',
+			background='black'
 		)
+  
+		s2 = ttk.Style()
+		s2.theme_use('clam')
+		s2.configure('TLabelframe', background = 'black', foreground = 'white')
+  
+		style = ttk.Style()
+		style.theme_use('clam')
+  
+		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
+		style.map('TButton', background=[('active','#FFF59E')])
+
 		label1 = tk.Label(root, bg = 'black')
-		self.track = ttk.LabelFrame(self, style = "TLabelframe", labelwidget = label1)
+		self.track = ttk.LabelFrame(self, style = 'TLabelframe', labelwidget = label1)
 		# self.track.config(font = "Helvetica", fontsize=12)
 		self.track.config(width=1000,height=500)
 		self.track.grid(row=5, column=10, padx=10)
-
-		# self.tracklist = tk.LabelFrame(self, text=f'PlayList - {str(len(self.playlist))}',
-		# 					font=("times new roman",15,"bold"),
-		# 					bg="grey",fg="white",bd=5,relief=tk.GROOVE)
-		# self.tracklist.config(width=150,height=400)
-		# self.tracklist.grid(row=0, column=1, rowspan=3, pady=5)
   
 		label2 = tk.Label(root, bg = 'black')
 		self.controls = ttk.LabelFrame(self, labelwidget=label2)
@@ -91,7 +96,7 @@ class Player(tk.Frame):
 
 		label3 = tk.Label(root, bg='black')
 		self.volumew = ttk.LabelFrame(self, labelwidget=label3)
-		self.volumew.config(width=500,height=1000)
+		self.volumew.config(width=800, height=1000)
 		self.volumew.grid(row=5, column=15, pady=5, padx=10)
 
 		label4 = tk.Label(root, bg='black')
@@ -116,31 +121,30 @@ class Player(tk.Frame):
 	
 	#region CONTROL_WIDGETS
 	def control_widgets(self):
-        #Load button
-		self.loadSongs = tk.Button(self.controls, bg='green', fg='white', font=10)
+		#Load button
+		self.loadSongs = ttk.Button(self.controls, style = 'TButton')
 		self.loadSongs['text'] = 'Load Songs'
 		self.loadSongs['command'] = self.retrieve_songs
 		self.loadSongs.grid(row=0, column=0, padx=10)
+  
         #PREVIOUS
-		self.prev = tk.Button(self.controls, image=prev)
+		self.prev = ttk.Button(self.controls, image=prev)
 		self.prev['command'] = self.prev_song
 		self.prev.grid(row=0, column=1)
+  
 		#PAUSE
-		self.pause = tk.Button(self.controls, image=pause)
+		self.pause = ttk.Button(self.controls, image=pause)
 		self.pause['command'] = self.pause_song
 		self.pause.grid(row=0, column=2)
+  
         #NEXT
-		self.next = tk.Button(self.controls, image=next_)
+		self.next = ttk.Button(self.controls, image=next_)
 		self.next['command'] = self.next_song
 		self.next.grid(row=0, column=3)	
 	#endregion
 
 	#region VOLUME_WIDGET
 	def volume_widgets(self):
-		
-		style = ttk.Style()
-		style.theme_use('clam')
-
 	    #VOLUME SLIDER
 		self.volume = tk.DoubleVar(self)
 		self.slider = tk.Scale(self.volumew, from_ = 10, to = 0, bg = 'black', fg = 'white' ) #from_ x = top value, to x = bottom value
@@ -151,57 +155,32 @@ class Player(tk.Frame):
 		self.slider.grid(row=1, column=5, padx=5)
 
 		#VOLUME UP 
-		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
-		style.map('TButton', background=[('active','white')])
-		self.volUp = ttk.Button(self.volumew)
+		self.volUp = ttk.Button(self.volumew, style = 'TButton')
 		self.volUp['text'] = 'Volume Up'
 		self.volUp['command'] = self.increase_volume
-		self.volUp.grid(row=0, column=5, pady=10, ipadx=10) #ipadx is a bandaid fix to make the vol up/downs the same width, couldn't get columnspan to work
+		self.volUp.grid(row=0, column=5, pady=10, padx=10) #ipadx is a bandaid fix to make the vol up/downs the same width, couldn't get columnspan to work
 
 		#VOLUME DOWN 
-		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
-		style.map('TButton', background=[('active','white')])
-		self.volDown = ttk.Button(self.volumew)
+		self.volDown = ttk.Button(self.volumew, style = 'TButton')
 		self.volDown['text'] = 'Volume Down'
 		self.volDown['command'] = self.decrease_volume
 		self.volDown.grid(row=3, column=5, pady=10)
 
 		#MUTE
-		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
-		style.map('TButton', background=[('active','white')])
-		self.mute = ttk.Button(self.volumew)
+		self.mute = ttk.Button(self.volumew, style = 'TButton')
 		self.mute['text'] = 'Mute'
 		self.mute['command'] = self.mute_volume   #need to create function
 		self.mute.grid(row=4, column=5, pady=5)
 
 		#VOLUME
-		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
-		style.map('TButton', background=[('active','white')])
-		self.volNum = ttk.Button(self.volumew)
+		self.volNum = ttk.Button(self.volumew, style = 'TButton')
 		self.volNum['text'] = 'Volume #' # '#' is placeholder for number input
 		# self.volDown['command'] = self.set_volume   #need to create function
 		self.volNum.grid(row=5, column=5, pady=5)
 	#endregion
 
-	#region TRACKLIST_WIDGETS
-	# def tracklist_widgets(self):
-    #     #PLAYLIST
-	# 	self.scrollbar = tk.Scrollbar(self.tracklist, orient=tk.VERTICAL)
-	# 	self.scrollbar.grid(row=0,column=1, rowspan=5, sticky='ns')
-
-	# 	self.list = tk.Listbox(self.tracklist, selectmode=tk.SINGLE,
-	# 				 yscrollcommand=self.scrollbar.set, selectbackground='sky blue')
-	# 	self.enumerate_songs()
-	# 	self.list.config(height=22)
-	# 	self.list.bind('<Double-1>', self.play_song) 
-
-	# 	self.scrollbar.config(command=self.list.yview)
-	# 	self.list.grid(row=0, column=0, rowspan=5)
-    #endregion
-
     #region RETRIEVE SONGS
 	def retrieve_songs(self):
-    	
         #FILE SEARCHER
 		self.songlist = []
 		directory = filedialog.askdirectory()
@@ -214,7 +193,7 @@ class Player(tk.Frame):
 		with open('songs.pickle', 'wb') as f:
 			pickle.dump(self.songlist, f)
 		self.playlist = self.songlist
-		self.tracklist['text'] = f'PlayList - {str(len(self.playlist))}'
+		# self.tracklist['text'] = f'PlayList - {str(len(self.playlist))}'
 		self.list.delete(0, tk.END)
 		self.enumerate_songs()
 	#endregion
@@ -330,45 +309,32 @@ class Player(tk.Frame):
 
   #region HOME BUTTON
 	def nav_widgets(self):
-		style = ttk.Style()
-		style.theme_use('clam')
-
 		#HOME
-		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
-		style.map('TButton', background=[('active','white')])
-		self.homePage = ttk.Button(self.nav)
+		self.homePage = ttk.Button(self.nav, style = 'TButton')
 		self.homePage['text'] = 'Home'
 		# self.homePage['command'] = self.go_home
 		self.homePage.grid(row=0, column=0, padx=10, pady=10)
 
 		#HELP
-		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
-		style.map('TButton', background=[('active','white')])
-		self.helpPage = ttk.Button(self.nav, command = self.openHelpWindow)
+		self.helpPage = ttk.Button(self.nav, style = 'TButton', command = self.openHelpWindow)
 		self.helpPage['text'] = 'Help'
 		# self.helpPage['command'] = self.go_help
 		self.helpPage.grid(row=1, column=0, padx=10, pady=5)
 
 		#LIBRARY
-		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
-		style.map('TButton', background=[('active','white')])
-		self.libPage = ttk.Button(self.nav, command = self.openLibraryWindow)
+		self.libPage = ttk.Button(self.nav, style = 'TButton', command = self.openLibraryWindow)
 		self.libPage['text'] = 'Library'
 		# self.libPage['command'] = self.go_lib
 		self.libPage.grid(row=2, column=0, padx=10, pady=5)
 
 
 		#QUEUE
-		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
-		style.map('TButton', background=[('active','white')])
-		self.queuePage = ttk.Button(self.nav, command = self.openQueueWindow)
+		self.queuePage = ttk.Button(self.nav, style = 'TButton', command = self.openQueueWindow)
 		self.queuePage['text'] = 'Queue'
 		self.queuePage.grid(row=3, column=0, padx=10, pady=5)
 
 		#PROFILE
-		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
-		style.map('TButton', background=[('active','white')])
-		self.profPage = ttk.Button(self.nav)
+		self.profPage = ttk.Button(self.nav, style = 'TButton')
 		self.profPage['text'] = 'Profile'
 		# self.queuePage['command'] = self.go_queue
 		self.profPage.grid(row=4, column=0, padx=10, pady=5)	
@@ -377,11 +343,32 @@ class Player(tk.Frame):
   #region NEW WINDOWS
 	# function to open a Queue Window
 	def openQueueWindow(self):
-		QueueWindow = Toplevel(root)
-		QueueWindow.title("Queue")
+		self.QueueWindow = Toplevel(root)
+		self.QueueWindow.title("Queue")
 		width= root.winfo_screenwidth() 
 		height= root.winfo_screenheight()
-		QueueWindow.geometry("%dx%d" % (width, height))
+		self.QueueWindow.geometry("%dx%d" % (width, height))
+
+		self.QueueWindow['bg'] = 'black'
+  
+		label5 = tk.Label(self.QueueWindow, bg = 'black', fg = 'white', font=("Gotham Medium typeface",16,"bold"), text='Queue')
+		self.tracklist = ttk.LabelFrame(self.QueueWindow, labelwidget=label5)
+		# self.tracklist.config(width=1200,height=600)
+		self.tracklist.grid(row=0, column=1, rowspan=3, pady=5)
+		
+		# scroll bar w
+		self.scrollbar = ttk.Scrollbar(self.tracklist, orient=tk.VERTICAL)
+		self.scrollbar.grid(row=0, column=5, rowspan=5, sticky='ns')
+
+		#ListBox
+		self.list = tk.Listbox(self.tracklist, selectmode=tk.SINGLE, yscrollcommand=self.scrollbar.set, selectbackground='sky blue'
+                         ,bg = 'black', fg = 'white')
+		self.enumerate_songs()
+		self.list.config(width=200,height=35)
+		self.list.bind('<Double-1>', self.play_song) 
+
+		self.scrollbar.config(command=self.list.yview)
+		self.list.grid(row=0, column=0, rowspan=5)
   
 	# function to open a Library Window
 	def openLibraryWindow(self):
