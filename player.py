@@ -8,6 +8,10 @@ from tkinter import filedialog
 from tkinter import PhotoImage
 from pygame import mixer
 
+from mutagen.mp3 import MP3
+from mutagen.oggvorbis import OggVorbis
+from mutagen import MutagenError
+
 '''
 THINGS TO DO:
 Home page
@@ -60,6 +64,7 @@ class Player(tk.Frame):
 		self.volume_widgets()
 		#self.tracklist_widgets()
 		self.nav_widgets()
+		self.progress_widgets()
   #endregion
   
     #region CREATE_FRAMES
@@ -82,6 +87,13 @@ class Player(tk.Frame):
   
 		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
 		style.map('TButton', background=[('active','#FFF59E')])
+  
+		self.trackLength = None  # Audio file length
+  
+		self.slider_value = tk.DoubleVar()
+		self.slider = tk.Scale( self, to=self.trackLength, orient=tk.HORIZONTAL, length=700,
+                                resolution=0.5, showvalue=True, tickinterval=30, digit=4,
+                                variable=self.slider_value, command=self.UpdateSlider )
 
 		label1 = tk.Label(root, bg = 'black')
 		self.track = ttk.LabelFrame(self, style = 'TLabelframe', labelwidget = label1)
@@ -103,6 +115,11 @@ class Player(tk.Frame):
 		self.nav = ttk.LabelFrame(self, labelwidget=label4)
 		self.nav.config(width=500,height=1000)
 		self.nav.grid(row=5, column=0, pady=5, padx=10)
+  
+		label5 = tk.Label(root, bg='black')
+		self.progress = ttk.LabelFrame(self, labelwidget=label5)
+		# self.progress.config(width=500,height=500)
+		self.progress.grid(row=15, column=10, pady=5, padx=10)
     #endregion
 	
     #region TRACK_WIDGETS
@@ -141,6 +158,15 @@ class Player(tk.Frame):
 		self.next = ttk.Button(self.controls, image=next_)
 		self.next['command'] = self.next_song
 		self.next.grid(row=0, column=3)	
+	#endregion
+ 
+	#region progress widget
+	def progress_widgets(self):
+		self.slider_value = tk.DoubleVar()
+		self.slider = tk.Scale( self.progress, to=self.trackLength, orient=tk.HORIZONTAL, length=700,
+                                resolution=0.5, showvalue=True, tickinterval=30, digit=4,
+                                variable=self.slider_value, command=self.UpdateSlider, bg = 'black', fg = 'white')
+		self.slider.grid(row=2)
 	#endregion
 
 	#region VOLUME_WIDGET
@@ -276,22 +302,7 @@ class Player(tk.Frame):
 		self.v = self.volume.get()
 		mixer.music.set_volume(self.v / 10)
 		print(self.v)
-  
-#   muted = FALSE
 
-
-# def mute_music():
-#     global muted
-#     if muted:  # Unmute the music
-#         mixer.music.set_volume(0.7)
-#         volumeBtn.configure(image=volumePhoto)
-#         scale.set(70)
-#         muted = FALSE
-#     else:  # mute the music
-#         mixer.music.set_volume(0)
-#         volumeBtn.configure(image=mutePhoto)
-#         scale.set(0)
-#         muted = TRUE
 	def mute_volume(self, event=None):
 		global muted
 		self.v = self.volume.get()
@@ -307,6 +318,58 @@ class Player(tk.Frame):
 		print(self.v)
   #endregion
 
+	#region Progress bar
+ 
+	def get_AudioFile_MetaData( self, tracktype ):
+		'''Get audio file and it's meta data (e.g. tracklength).'''
+		print( '\ndef get_AudioFileMetaData( self, audiofile ):' )
+
+		try:
+			if tracktype == 'mp3':
+				audiofile='Test.mp3' # In current directory
+				f = MP3( audiofile )
+			elif tracktype == 'ogg':
+				audiofile='Test.ogg' # In current directory
+				f = OggVorbis( audiofile )
+			else:
+				raise print( 'Track type not supported.' )
+		except MutagenError:
+			print( "Fail to load audio file ({}) metadata".format(audiofile) )
+		else:
+			trackLength = f.info.length
+		self.track = audiofile
+		self.trackLength = trackLength; print( 'self.trackLength',type(self.trackLength),self.trackLength,' sec' )
+    
+	def TrackPlay( self, playtime ):
+		'''Slider to track the playing of the track.'''
+		print('\ndef TrackPlay():')
+        #1.When track is playing
+        #   1. Set slider position to playtime
+        #   2. Increase playtime by interval (1 sec)
+        #   3. start TrackPlay loop
+        #2.When track is not playing
+        #   1. Print 'Track Ended'
+		if self.player.music.get_busy():
+			self.slider_value.set( playtime ); print( type(self.slider_value.get()),'slider_value = ',self.slider_value.get() )
+			playtime += 1.0 
+			self.loopID = self.after(1000, lambda:self.TrackPlay( playtime ) );\
+                                               print( 'self.loopID = ', self.loopID ) 
+		else:
+			print('Track Ended')
+   
+	def UpdateSlider( self, value ):
+		'''Move slider position when tk.Scale's trough is clicked or when slider is clicked.'''
+		print( '\ndef UpdateSlider():' );       print(type(value),'value = ',value,' sec')
+		if self.player.music.get_busy():
+			print("Track Playing")
+			self.after_cancel( self.loopID ) #Cancel PlayTrack loop    
+			self.slider_value.set( value )   #Move slider to new position
+			self.Play( )                     #Play track from new postion
+		else:
+			print("Track Not Playing")
+			self.slider_value.set( value )   #Move slider to new position
+
+	#endregion
     #region Left Buttons
 	def nav_widgets(self):
 		#HOME
@@ -331,8 +394,7 @@ class Player(tk.Frame):
 		self.helpPage['text'] = 'Help'
 		# self.helpPage['command'] = self.go_help
 		self.helpPage.grid(row=4, column=0, padx=10, pady=5)
-
-  #endregion
+ 	 #endregion
   
     #region NEW WINDOWS
 	# function to open a Queue Window
