@@ -307,7 +307,7 @@ class Player(tk.Frame):
 		print(self.v)
   #endregion
 
-  #region HOME BUTTON
+    #region Left Buttons
 	def nav_widgets(self):
 		#HOME
 		self.homePage = ttk.Button(self.nav, style = 'TButton')
@@ -315,32 +315,26 @@ class Player(tk.Frame):
 		# self.homePage['command'] = self.go_home
 		self.homePage.grid(row=0, column=0, padx=10, pady=10)
 
-		#HELP
-		self.helpPage = ttk.Button(self.nav, style = 'TButton', command = self.openHelpWindow)
-		self.helpPage['text'] = 'Help'
-		# self.helpPage['command'] = self.go_help
-		self.helpPage.grid(row=1, column=0, padx=10, pady=5)
-
+		#QUEUE
+		self.queuePage = ttk.Button(self.nav, style = 'TButton', command = self.openQueueWindow)
+		self.queuePage['text'] = 'Queue'
+		self.queuePage.grid(row=2, column=0, padx=10, pady=5)
+  
 		#LIBRARY
 		self.libPage = ttk.Button(self.nav, style = 'TButton', command = self.openLibraryWindow)
 		self.libPage['text'] = 'Library'
 		# self.libPage['command'] = self.go_lib
-		self.libPage.grid(row=2, column=0, padx=10, pady=5)
+		self.libPage.grid(row=3, column=0, padx=10, pady=5)
+  
+		#HELP
+		self.helpPage = ttk.Button(self.nav, style = 'TButton', command = self.openHelpWindow)
+		self.helpPage['text'] = 'Help'
+		# self.helpPage['command'] = self.go_help
+		self.helpPage.grid(row=4, column=0, padx=10, pady=5)
 
-
-		#QUEUE
-		self.queuePage = ttk.Button(self.nav, style = 'TButton', command = self.openQueueWindow)
-		self.queuePage['text'] = 'Queue'
-		self.queuePage.grid(row=3, column=0, padx=10, pady=5)
-
-		#PROFILE
-		self.profPage = ttk.Button(self.nav, style = 'TButton')
-		self.profPage['text'] = 'Profile'
-		# self.queuePage['command'] = self.go_queue
-		self.profPage.grid(row=4, column=0, padx=10, pady=5)	
   #endregion
   
-  #region NEW WINDOWS
+    #region NEW WINDOWS
 	# function to open a Queue Window
 	def openQueueWindow(self):
 		self.QueueWindow = Toplevel(root)
