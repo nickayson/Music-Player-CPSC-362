@@ -370,10 +370,11 @@ class Player(tk.Frame):
 			self.slider_value.set( value )   #Move slider to new position
 
 	#endregion
+ 
     #region Left Buttons
 	def nav_widgets(self):
 		#HOME
-		self.homePage = ttk.Button(self.nav, style = 'TButton')
+		self.homePage = ttk.Button(self.nav, style = 'TButton', command = self.openHomeWindow )
 		self.homePage['text'] = 'Home'
 		# self.homePage['command'] = self.go_home
 		self.homePage.grid(row=0, column=0, padx=10, pady=10)
@@ -398,6 +399,28 @@ class Player(tk.Frame):
   
     #region NEW WINDOWS
 	# function to open a Queue Window
+	def openHomeWindow(self):
+		self.HomeWindow = Toplevel(root)
+		self.HomeWindow.title("Home")
+		width= root.winfo_screenwidth() 
+		height= root.winfo_screenheight()
+		self.HomeWindow.geometry("%dx%d" % (width, height))
+
+		self.HomeWindow['bg'] = 'black'
+
+		self.image = tk.Label(self.HomeWindow, image=img)
+		self.image.configure(width=525, height=400)
+		self.image.grid(row=2,column=0)
+		# Create text widget and specify size.
+  
+		self.Home = tk.Text(self.HomeWindow, bg = 'black', fg = 'white', font=("Gotham Medium typeface",16,"bold"))	
+		#Put in text description of what the software does and why we created it with the logo.png photo
+		Description = """Creating a user friendly software that allows users to play music easily in any environment.\nThe main purpose of this software is to play music from local files with many features such as creating playlists,\nfavoriting a song, creating a queue, and many more."""
+		self.Home.config(width=100,height=10)
+		self.Home.grid(row=0, column=0, padx=10)
+  
+		self.Home.insert(tk.END, Description)
+  
 	def openQueueWindow(self):
 		self.QueueWindow = Toplevel(root)
 		self.QueueWindow.title("Queue")
@@ -428,19 +451,21 @@ class Player(tk.Frame):
   
 	# function to open a Library Window
 	def openLibraryWindow(self):
-		LibraryWindow = Toplevel(root)
-		LibraryWindow.title("Library")
+     #Display Playslists by searching through file explorer Directory
+		self.LibraryWindow = Toplevel(root)
+		self.LibraryWindow.title("Library")
 		width= root.winfo_screenwidth() 
 		height= root.winfo_screenheight()
-		LibraryWindow.geometry("%dx%d" % (width, height))
+		self.LibraryWindow.geometry("%dx%d" % (width, height))
 	
 	# function to open a Help Window
 	def openHelpWindow(self):
-		HelpWindow = Toplevel(root)
-		HelpWindow.title("Library")
+     # Instructions for each button and how to navigate around the app
+		self.HelpWindow = Toplevel(root)
+		self.HelpWindow.title("Library")
 		width= root.winfo_screenwidth() 
 		height= root.winfo_screenheight()
-		HelpWindow.geometry("%dx%d" % (width, height))
+		self.HelpWindow.geometry("%dx%d" % (width, height))
   #endregion
 
 #variables called into main
@@ -450,4 +475,5 @@ next_ = PhotoImage(file = 'images/next.gif')
 prev = PhotoImage(file='images/previous.gif')
 play = PhotoImage(file='images/play.gif')
 pause = PhotoImage(file='images/pause.gif')
+#add image variable here
   
