@@ -336,6 +336,11 @@ class Player(tk.Frame):
 		#Get song length with mutagen
 		#have to have Queue open
 		song = self.list.get(self.current)
+		# directory = filedialog.askdirectory()
+		# for root_, dirs, files in os.walk(directory):
+		# 		for file in files:
+		# 			if os.path.splitext(file)[1] == '.mp3':
+		# 				path = (root_ + '/' + file).replace('\\','/')
 		song = f"C:/Users/Nick's Laptop/Music/Music/{song}"
 		song_mut = MP3(song)
 		global song_length
