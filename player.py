@@ -1,6 +1,9 @@
+from msilib.schema import TextStyle
 import os
 import pickle
 import tkinter as tk
+import time
+
 from tkinter import *
 from tkinter import ttk
 from ttkthemes import ThemedTk
@@ -62,7 +65,6 @@ class Player(tk.Frame):
 		self.track_widgets()
 		self.control_widgets()
 		self.volume_widgets()
-		#self.tracklist_widgets()
 		self.nav_widgets()
 		self.progress_widgets()
   #endregion
@@ -87,13 +89,6 @@ class Player(tk.Frame):
   
 		style.configure('TButton', background = 'black', foreground = 'white', font=10, borderwidth=1, focusthickness=3, focuscolor='none')
 		style.map('TButton', background=[('active','#FFF59E')])
-  
-		self.trackLength = None  # Audio file length
-  
-		self.slider_value = tk.DoubleVar()
-		self.slider = tk.Scale( self, to=self.trackLength, orient=tk.HORIZONTAL, length=700,
-                                resolution=0.5, showvalue=True, tickinterval=30, digit=4,
-                                variable=self.slider_value, command=self.UpdateSlider )
 
 		label1 = tk.Label(root, bg = 'black')
 		self.track = ttk.LabelFrame(self, style = 'TLabelframe', labelwidget = label1)
@@ -119,7 +114,10 @@ class Player(tk.Frame):
 		label5 = tk.Label(root, bg='black')
 		self.progress = ttk.LabelFrame(self, labelwidget=label5)
 		# self.progress.config(width=500,height=500)
-		self.progress.grid(row=15, column=10, pady=5, padx=10)
+		self.progress.grid(row=15, column=10, padx=10)
+  
+		self.status_bar = tk.Label(root,text='', bg='black', fg='white',anchor=E, font=("calibri",12,"bold"))
+		self.status_bar.pack(fill=X, side=BOTTOM, ipady=2)
     #endregion
 	
     #region TRACK_WIDGETS
@@ -163,12 +161,13 @@ class Player(tk.Frame):
 	#region progress widget
 	def progress_widgets(self):
 		self.slider_value = tk.DoubleVar()
-		self.slider = tk.Scale( self.progress, to=self.trackLength, orient=tk.HORIZONTAL, length=700,
+		self.my_slider = tk.Scale(self.progress, from_=0, to=100, orient=HORIZONTAL, length=700,
                                 resolution=0.5, showvalue=True, tickinterval=30, digit=4,
-                                variable=self.slider_value, command=self.UpdateSlider, bg = 'black', fg = 'white')
-		self.slider.grid(row=2)
+                                variable=self.slider_value, bg = 'black', fg = 'white')
+		self.my_slider['command'] = self.slide
+		self.my_slider.grid(row=1, column=1)
 	#endregion
-
+ 
 	#region VOLUME_WIDGET
 	def volume_widgets(self):
 	    #VOLUME SLIDER
@@ -236,17 +235,20 @@ class Player(tk.Frame):
 			self.current = self.list.curselection()[0]
 			for i in range(len(self.playlist)):
 				self.list.itemconfigure(i, bg="white")
-
+    
 		print(self.playlist[self.current])
 		mixer.music.load(self.playlist[self.current])
 		self.songtrack['anchor'] = 'w' 
 		self.songtrack['text'] = os.path.basename(self.playlist[self.current])
+  
+		# get song length
+		self.play_time()
 
 		self.pause['image'] = play
 		self.paused = False
 		self.played = True
 		self.list.activate(self.current) 
-		self.list.itemconfigure(self.current, bg='sky blue')
+		self.list.itemconfigure(self.current)
 
 		mixer.music.play()
 
@@ -265,6 +267,8 @@ class Player(tk.Frame):
 	#endregion
 	
 	def prev_song(self):
+		self.status_bar.config(text='')
+		self.my_slider.config(to=0)
 		if self.current > 0:
 			self.current -= 1
 		else:
@@ -273,6 +277,8 @@ class Player(tk.Frame):
 		self.play_song()
 
 	def next_song(self):
+		self.status_bar.config(text='')
+		self.my_slider.config(to=0)
 		if self.current < len(self.playlist) - 1:
 			self.current += 1
 		else:
@@ -317,57 +323,61 @@ class Player(tk.Frame):
 			muted = TRUE
 		print(self.v)
   #endregion
+ 
+	#region SONG DURATION 
+	# grab song length time info
+	def play_time(self):
+		# time conversions
+		current_time = mixer.music.get_pos()/1000
+  
+		#throw up temporary label
+		converted_current_time = time.strftime('%H:%M:%S', time.gmtime(current_time))
+  
+		#Get song length with mutagen
+		#have to have Queue open
+		song = self.list.get(self.current)
+		song = f"C:/Users/Nick's Laptop/Music/Music/{song}"
+		song_mut = MP3(song)
+		global song_length
+		song_length = song_mut.info.length
+		converted_song_length = time.strftime('%H:%M:%S', time.gmtime(song_length))
+		# increase current time
+		current_time += 1
+  
+		if int(self.my_slider.get()) == int(current_time):
+			# slider hasnt been moved
+			# update slider to position
+			slider_position = int(song_length)
+			self.my_slider.config(to=slider_position)
+			self.slider_value.set(int(current_time))
+		elif self.paused == True:	
+			pass
+		else:
+  			# slider has moved
+			# update slider to position
+			slider_position = int(song_length)
+			self.my_slider.config(to=slider_position)
+			self.slider_value.set(self.my_slider.get())
+   
+			converted_current_time = time.strftime('%H:%M:%S', time.gmtime(int(self.my_slider.get())))
+   
+			self.status_bar.config(text=f'Time Elapsed: {converted_current_time} of {converted_song_length}        ')
+
+			# move everything along by one second
+			next_time = int (self.my_slider.get()) + 1
+			self.slider_value.set(next_time)
+  
+		# update time
+		self.status_bar.after(1000, self.play_time)
+	#endregion
 
 	#region Progress bar
- 
-	def get_AudioFile_MetaData( self, tracktype ):
-		'''Get audio file and it's meta data (e.g. tracklength).'''
-		print( '\ndef get_AudioFileMetaData( self, audiofile ):' )
+	def slide(self,x):
+		song = self.list.get(self.current)
+		song = f"C:/Users/Nick's Laptop/Music/Music/{song}"
 
-		try:
-			if tracktype == 'mp3':
-				audiofile='Test.mp3' # In current directory
-				f = MP3( audiofile )
-			elif tracktype == 'ogg':
-				audiofile='Test.ogg' # In current directory
-				f = OggVorbis( audiofile )
-			else:
-				raise print( 'Track type not supported.' )
-		except MutagenError:
-			print( "Fail to load audio file ({}) metadata".format(audiofile) )
-		else:
-			trackLength = f.info.length
-		self.track = audiofile
-		self.trackLength = trackLength; print( 'self.trackLength',type(self.trackLength),self.trackLength,' sec' )
-    
-	def TrackPlay( self, playtime ):
-		'''Slider to track the playing of the track.'''
-		print('\ndef TrackPlay():')
-        #1.When track is playing
-        #   1. Set slider position to playtime
-        #   2. Increase playtime by interval (1 sec)
-        #   3. start TrackPlay loop
-        #2.When track is not playing
-        #   1. Print 'Track Ended'
-		if self.player.music.get_busy():
-			self.slider_value.set( playtime ); print( type(self.slider_value.get()),'slider_value = ',self.slider_value.get() )
-			playtime += 1.0 
-			self.loopID = self.after(1000, lambda:self.TrackPlay( playtime ) );\
-                                               print( 'self.loopID = ', self.loopID ) 
-		else:
-			print('Track Ended')
-   
-	def UpdateSlider( self, value ):
-		'''Move slider position when tk.Scale's trough is clicked or when slider is clicked.'''
-		print( '\ndef UpdateSlider():' );       print(type(value),'value = ',value,' sec')
-		if self.player.music.get_busy():
-			print("Track Playing")
-			self.after_cancel( self.loopID ) #Cancel PlayTrack loop    
-			self.slider_value.set( value )   #Move slider to new position
-			self.Play( )                     #Play track from new postion
-		else:
-			print("Track Not Playing")
-			self.slider_value.set( value )   #Move slider to new position
+		mixer.music.load(song)
+		mixer.music.play(loops=0, start=int(self.slider_value.get()))
 
 	#endregion
  
@@ -510,9 +520,7 @@ class Player(tk.Frame):
 		self.loadsongsbutton = tk.Label(self.HelpWindow, image=loadsongs)
 		self.loadsongsbutton.configure(width=225, height=100)
 		self.loadsongsbutton.grid(row=1,column=0, padx= 0, pady=0)
-
-		
-		
+	
   #endregion
 
 #variables called into main

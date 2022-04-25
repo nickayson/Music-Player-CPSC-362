@@ -1,4 +1,5 @@
 # pip install pygame
+# pip install mutagen
 
 import os
 import pickle
