@@ -462,10 +462,57 @@ class Player(tk.Frame):
 	def openHelpWindow(self):
      # Instructions for each button and how to navigate around the app
 		self.HelpWindow = Toplevel(root)
-		self.HelpWindow.title("Library")
+		self.HelpWindow.title("Help")
 		width= root.winfo_screenwidth() 
 		height= root.winfo_screenheight()
 		self.HelpWindow.geometry("%dx%d" % (width, height))
+
+		######### Overall title for the help page
+		# self.helpTitle = tk.Text(self.HelpWindow, bg = 'black', fg = 'white', font=("Gotham Medium typeface",40,"bold"))	
+		# #Put in text description of what the software does and why we created it with the logo.png photo
+		# Description = """Welcome to the Help Page"""
+		# self.helpTitle.config(width=23,height=1)
+		# self.helpTitle.grid(row=0, column=0, padx=425)
+		# self.helpTitle.insert(tk.END, Description)
+
+######### Title for description of the mute button function
+		# self.muteTitle = tk.Text(self.HelpWindow, bg = 'blue', fg = 'white', font=("Gotham Medium typeface",20,"bold"))
+		# Description = """Mute button information:"""
+		# self.muteTitle.config(width=22, height=1)
+		# self.muteTitle.grid(row= 0, column=0, padx= 50, pady=115)
+		# self.muteTitle.insert(tk.END,Description)
+
+######### Description for mute button function
+		# self.muteText = tk.Text(self.HelpWindow, bg = 'blue', fg = 'white', font=("Gotham Medium typeface",12,"bold"))
+		# Description = """Our mute button will record your volume level from\nbefore mute was hit; this level will be restored\nupon being unmuted. The volume can be unmuted\nby interacting with any of the volume control\nbuttons or the slider."""
+		# self.muteText.config(width= 43, height=5)
+		# self.muteText.grid(row=0, column= 0, padx= 0, pady=150)
+		# self.muteText.insert(tk.END, Description)
+
+######### Title for 'Load Song' Description
+		self.loadsongTitle = tk.Text(self.HelpWindow, bg = 'purple', fg = 'white', font=("Gotham Medium typeface",20,"bold"))	
+		#Put in text description of what the software does and why we created it with the logo.png photo
+		Description = """Loading Songs:"""
+		self.loadsongTitle.config(width=14,height=1)
+		self.loadsongTitle.grid(row=0, column=0, padx=1100, pady=115)
+  
+		self.loadsongTitle.insert(tk.END, Description)
+
+######## Description of how to load songs
+		self.loadsongsInfo = tk.Text(self.HelpWindow, bg = 'purple', fg = 'white', font=("Gotham Medium typeface",12,"bold"))	
+		#Put in text description of what the software does and why we created it with the logo.png photo
+		Description = """You can easily add songs from your computer by\nuploading them as files. Simply click on the "Load\nSong" button to bring up a window from which you can navigate through your files to find songs to\nupload. One a song has been uloaded, it will appear in your library.(?)"""
+		self.loadsongsInfo.config(width=44,height=7)
+		self.loadsongsInfo.grid(row=0, column=0, padx=1060, pady=150)
+  
+		self.loadsongsInfo.insert(tk.END, Description)
+
+		self.loadsongsbutton = tk.Label(self.HelpWindow, image=loadsongs)
+		self.loadsongsbutton.configure(width=225, height=100)
+		self.loadsongsbutton.grid(row=1,column=0, padx= 0, pady=0)
+
+		
+		
   #endregion
 
 #variables called into main
@@ -475,5 +522,6 @@ next_ = PhotoImage(file = 'images/next.gif')
 prev = PhotoImage(file='images/previous.gif')
 play = PhotoImage(file='images/play.gif')
 pause = PhotoImage(file='images/pause.gif')
+loadsongs = PhotoImage(file= 'images/loadsongs.png')
 #add image variable here
   
