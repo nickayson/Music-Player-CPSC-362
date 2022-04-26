@@ -174,8 +174,8 @@ class Player(tk.Frame):
 		self.volume = tk.DoubleVar(self)
 		self.slider = tk.Scale(self.volumew, from_ = 10, to = 0, bg = 'black', fg = 'white' ) #from_ x = top value, to x = bottom value
 		self.slider['variable'] = self.volume
-		self.volume.set(8)
-		mixer.music.set_volume(0.8)
+		self.volume.set(5)
+		mixer.music.set_volume(0.5)
 		self.slider['command'] = self.change_volume
 		self.slider.grid(row=1, column=5, padx=5)
 
@@ -212,6 +212,7 @@ class Player(tk.Frame):
 		for root_, dirs, files in os.walk(directory):
 				for file in files:
 					if os.path.splitext(file)[1] == '.mp3':
+						global path
 						path = (root_ + '/' + file).replace('\\','/')
 						self.songlist.append(path)
 
@@ -444,11 +445,17 @@ class Player(tk.Frame):
 		self.QueueWindow.geometry("%dx%d" % (width, height))
 
 		self.QueueWindow['bg'] = 'black'
+
+		#Load button
+		self.loadSongs = ttk.Button(self.QueueWindow, style = 'TButton')
+		self.loadSongs['text'] = 'Load Songs'
+		self.loadSongs['command'] = self.retrieve_songs
+		self.loadSongs.grid(row=0, column=0, pady=1)
   
 		label5 = tk.Label(self.QueueWindow, bg = 'black', fg = 'white', font=("Gotham Medium typeface",16,"bold"), text='Queue')
 		self.tracklist = ttk.LabelFrame(self.QueueWindow, labelwidget=label5)
 		# self.tracklist.config(width=1200,height=600)
-		self.tracklist.grid(row=0, column=1, rowspan=3, pady=5)
+		self.tracklist.grid(row=5, column=0, rowspan=3, pady=5)
 		
 		# scroll bar w
 		self.scrollbar = ttk.Scrollbar(self.tracklist, orient=tk.VERTICAL)
@@ -482,45 +489,44 @@ class Player(tk.Frame):
 		height= root.winfo_screenheight()
 		self.HelpWindow.geometry("%dx%d" % (width, height))
 
+		self.HelpWindow['bg'] = 'black'
+
 		######### Overall title for the help page
-		# self.helpTitle = tk.Text(self.HelpWindow, bg = 'black', fg = 'white', font=("Gotham Medium typeface",40,"bold"))	
-		# #Put in text description of what the software does and why we created it with the logo.png photo
-		# Description = """Welcome to the Help Page"""
+		self.helpTitle = tk.Label(self.HelpWindow, bg = 'black', fg = 'white', font=("Gotham Medium typeface",20,"bold")
+                            , text="Welcome to the Help Page" )	
+		#Put in text description of what the software does and why we created it with the logo.png photo
 		# self.helpTitle.config(width=23,height=1)
-		# self.helpTitle.grid(row=0, column=0, padx=425)
+		self.helpTitle.grid(row=0, column=0, padx=10)
 		# self.helpTitle.insert(tk.END, Description)
 
-######### Title for description of the mute button function
-		# self.muteTitle = tk.Text(self.HelpWindow, bg = 'blue', fg = 'white', font=("Gotham Medium typeface",20,"bold"))
-		# Description = """Mute button information:"""
+		######### Title for description of the mute button function
+		self.muteTitle = tk.Label(self.HelpWindow, bg = 'blue', fg = 'white', font=("Gotham Medium typeface",10,"bold"),
+                          text="Mute button information:"  )
 		# self.muteTitle.config(width=22, height=1)
-		# self.muteTitle.grid(row= 0, column=0, padx= 50, pady=115)
+		self.muteTitle.grid(row=10, column=0, padx= 10, pady=10)
 		# self.muteTitle.insert(tk.END,Description)
 
-######### Description for mute button function
-		# self.muteText = tk.Text(self.HelpWindow, bg = 'blue', fg = 'white', font=("Gotham Medium typeface",12,"bold"))
-		# Description = """Our mute button will record your volume level from\nbefore mute was hit; this level will be restored\nupon being unmuted. The volume can be unmuted\nby interacting with any of the volume control\nbuttons or the slider."""
+		######### Description for mute button function
+		self.muteText = tk.Label(self.HelpWindow, bg = 'blue', fg = 'white', font=("Gotham Medium typeface",12,"bold"),
+					text = "Our mute button will record your volume level from\nbefore mute was hit; this level will be restored\nupon being unmuted. The volume can be unmuted\nby interacting with any of the volume control\nbuttons or the slider.")
 		# self.muteText.config(width= 43, height=5)
-		# self.muteText.grid(row=0, column= 0, padx= 0, pady=150)
+		self.muteText.grid(row=15, column=0, padx= 0, pady=10)
 		# self.muteText.insert(tk.END, Description)
 
-######### Title for 'Load Song' Description
-		self.loadsongTitle = tk.Text(self.HelpWindow, bg = 'purple', fg = 'white', font=("Gotham Medium typeface",20,"bold"))	
+		######### Title for 'Load Song' Description
+		self.loadsongTitle = tk.Label(self.HelpWindow, bg = 'purple', fg = 'white', font=("Gotham Medium typeface",20,"bold"),
+		            text= "Loading Songs:")	
 		#Put in text description of what the software does and why we created it with the logo.png photo
-		Description = """Loading Songs:"""
-		self.loadsongTitle.config(width=14,height=1)
-		self.loadsongTitle.grid(row=0, column=0, padx=1100, pady=115)
+		# self.loadsongTitle.config(width=14,height=1)
+		self.loadsongTitle.grid(row=10, column=35, padx=0, pady=10)
   
-		self.loadsongTitle.insert(tk.END, Description)
 
-######## Description of how to load songs
-		self.loadsongsInfo = tk.Text(self.HelpWindow, bg = 'purple', fg = 'white', font=("Gotham Medium typeface",12,"bold"))	
+		######## Description of how to load songs
+		self.loadsongsInfo = tk.Label(self.HelpWindow, bg = 'purple', fg = 'white', font=("Gotham Medium typeface",12,"bold"))	
 		#Put in text description of what the software does and why we created it with the logo.png photo
 		Description = """You can easily add songs from your computer by\nuploading them as files. Simply click on the "Load\nSong" button to bring up a window from which you can navigate through your files to find songs to\nupload. One a song has been uloaded, it will appear in your library.(?)"""
-		self.loadsongsInfo.config(width=44,height=7)
-		self.loadsongsInfo.grid(row=0, column=0, padx=1060, pady=150)
+		self.loadsongsInfo.grid(row=15, column=35, padx=0, pady=10)
   
-		self.loadsongsInfo.insert(tk.END, Description)
 
 		self.loadsongsbutton = tk.Label(self.HelpWindow, image=loadsongs)
 		self.loadsongsbutton.configure(width=225, height=100)
