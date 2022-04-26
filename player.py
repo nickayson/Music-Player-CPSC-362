@@ -17,30 +17,15 @@ from mutagen import MutagenError
 
 '''
 THINGS TO DO:
-Home page
-	- fix gap above buttons
-
-Volume slider buttons and formatting
-	- just need button commands/functions
-
-Change play buttons and everything
-
-Make song scaler at bottom
+Change play buttons, etc
 
 Make Login Page
  
 Make Library Page
 
 Make Queue Page
-'''
 
-'''
-NOTES:
-
-we could use ttk.Progressbar for the song scaler --> https://docs.python.org/3/library/tkinter.ttk.html 
-theres a weird gap above all the labels? not sure why or how to fix it
--ashley
-
+Make Help Page
 '''
 muted = FALSE
 class Player(tk.Frame): 
@@ -60,6 +45,7 @@ class Player(tk.Frame):
 		self.current = 0
 		self.paused = True
 		self.played = False
+		self.folderpath = ""
 
 		self.create_frames()
 		self.track_widgets()
@@ -212,6 +198,7 @@ class Player(tk.Frame):
 		for root_, dirs, files in os.walk(directory):
 				for file in files:
 					if os.path.splitext(file)[1] == '.mp3':
+						self.folderpath = root_
 						global path
 						path = (root_ + '/' + file).replace('\\','/')
 						self.songlist.append(path)
@@ -337,12 +324,7 @@ class Player(tk.Frame):
 		#Get song length with mutagen
 		#have to have Queue open
 		song = self.list.get(self.current)
-		# directory = filedialog.askdirectory()
-		# for root_, dirs, files in os.walk(directory):
-		# 		for file in files:
-		# 			if os.path.splitext(file)[1] == '.mp3':
-		# 				path = (root_ + '/' + file).replace('\\','/')
-		song = f"C:/Users/Nick's Laptop/Music/Music/{song}"
+		song = f"{self.folderpath}/{song}"		
 		song_mut = MP3(song)
 		global song_length
 		song_length = song_mut.info.length
@@ -380,7 +362,8 @@ class Player(tk.Frame):
 	#region Progress bar
 	def slide(self,x):
 		song = self.list.get(self.current)
-		song = f"C:/Users/Nick's Laptop/Music/Music/{song}"
+		song = f"{self.folderpath}/{song}"			
+
 
 		mixer.music.load(song)
 		mixer.music.play(loops=0, start=int(self.slider_value.get()))
