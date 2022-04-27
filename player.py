@@ -6,6 +6,7 @@ import time
 
 from tkinter import *
 from tkinter import ttk
+from turtle import bgcolor, color
 from ttkthemes import ThemedTk
 from tkinter import filedialog
 from tkinter import PhotoImage
@@ -474,46 +475,62 @@ class Player(tk.Frame):
 
 		self.HelpWindow['bg'] = 'black'
 
-		######### Overall title for the help page
+		# Overall title for the help page
 		self.helpTitle = tk.Label(self.HelpWindow, bg = 'black', fg = 'white', font=("Gotham Medium typeface",20,"bold")
                             , text="Welcome to the Help Page" )	
-		#Put in text description of what the software does and why we created it with the logo.png photo
-		# self.helpTitle.config(width=23,height=1)
-		self.helpTitle.grid(row=0, column=0, padx=10)
-		# self.helpTitle.insert(tk.END, Description)
+		# Anchor to North point on page (top center)
+		self.helpTitle.pack(anchor= 'n')
 
-		######### Title for description of the mute button function
-		self.muteTitle = tk.Label(self.HelpWindow, bg = 'blue', fg = 'white', font=("Gotham Medium typeface",10,"bold"),
-                          text="Mute button information:"  )
-		# self.muteTitle.config(width=22, height=1)
-		self.muteTitle.grid(row=10, column=0, padx= 10, pady=10)
-		# self.muteTitle.insert(tk.END,Description)
+		# Mute button function info
+		self.muteInfo = tk.Label(self.HelpWindow, bg = 'blue', fg = 'white', font=("Gotham Medium typeface",17,"bold"),
+                          text="""Mute button information:\nOur mute button will record your volume level from before mute was\nhit; this level will be restored upon being unmuted. The volume can be\nunmuted by interacting with any of the volume control buttons or the slider.""")
+		# Anchor label to NW corner (top left)
+		self.muteInfo.pack(anchor= 'nw')
 
-		######### Description for mute button function
-		self.muteText = tk.Label(self.HelpWindow, bg = 'blue', fg = 'white', font=("Gotham Medium typeface",12,"bold"),
-					text = "Our mute button will record your volume level from\nbefore mute was hit; this level will be restored\nupon being unmuted. The volume can be unmuted\nby interacting with any of the volume control\nbuttons or the slider.")
-		# self.muteText.config(width= 43, height=5)
-		self.muteText.grid(row=15, column=0, padx= 0, pady=10)
-		# self.muteText.insert(tk.END, Description)
+		# Info about viewing the music library
+		self.LibraryInfo = tk.Label(self.HelpWindow, bg = 'purple', fg = 'white', font=("Gotham Medium typeface",17,"bold"), 
+		             text="""How to view your Library:\nYour music library comprises all of the songs that you have loaded into\nthe player from your device. You can view this by pressing the library\nbutton from the home screen. You can also sort your songs by different\ncriteria using the sort option(?). You can perform any normal actions\non these songs, such as adding to a playlist or the queue.""")
+		# Anchor just below above Label
+		self.LibraryInfo.pack(anchor='ne', pady= 10)
 
-		######### Title for 'Load Song' Description
-		self.loadsongTitle = tk.Label(self.HelpWindow, bg = 'purple', fg = 'white', font=("Gotham Medium typeface",20,"bold"),
-		            text= "Loading Songs:")	
-		#Put in text description of what the software does and why we created it with the logo.png photo
-		# self.loadsongTitle.config(width=14,height=1)
-		self.loadsongTitle.grid(row=10, column=35, padx=0, pady=10)
-  
 
-		######## Description of how to load songs
-		self.loadsongsInfo = tk.Label(self.HelpWindow, bg = 'purple', fg = 'white', font=("Gotham Medium typeface",12,"bold"))	
-		#Put in text description of what the software does and why we created it with the logo.png photo
-		Description = """You can easily add songs from your computer by\nuploading them as files. Simply click on the "Load\nSong" button to bring up a window from which you can navigate through your files to find songs to\nupload. One a song has been uloaded, it will appear in your library.(?)"""
-		self.loadsongsInfo.grid(row=15, column=35, padx=0, pady=10)
-  
 
-		self.loadsongsbutton = tk.Label(self.HelpWindow, image=loadsongs)
-		self.loadsongsbutton.configure(width=225, height=100)
-		self.loadsongsbutton.grid(row=1,column=0, padx= 0, pady=0)
+		# Info for how to load songs
+		self.about_loadsong = tk.Label(self.HelpWindow, bg = 'cyan', fg = 'white', font=("Gotham Medium typeface",17,"bold"),
+		            text= """Loading Songs:\nYou can easily add songs from your computer by uploading them as files.\nSimply click on the "Load Song" button to bring up a window from which you\ncan navigate through your files to find songs to upload. Once a song has\nbeen uploaded, it will appear in your library. There are additional 'Load\nSong' buttons on the Queue and Library Pages.""")	
+		# Anchor label to West point (middle left)
+		self.about_loadsong.pack(anchor= 'w', pady= 1)
+
+		# Information about the Queue
+		self.queueInfo = tk.Label(self.HelpWindow, bg= 'green', fg = 'white', font=("Gotham Medium typeface",17,"bold"),
+		             text= """Queue Information:\nYou can view your current queue by pressing the queue button on the\nhomepage. This will bring up a new window that will show what songs\nare next to be played and in what order they will be played.""")
+		# Anchor label to E corner (middle right)
+		self.queueInfo.pack(anchor= 'e', pady= 10)
+
+		self.creatingPlaylists = tk.Label(self.HelpWindow, bg= 'magenta', fg = 'white', font=("Gotham Medium typeface",17,"bold"),
+		             text= """Creating a Playlist:\nNot sure if we are implementing this button, so this is just a placeholder for now.\n\n""")
+		# Anchor label to E corner (middle right)
+		self.creatingPlaylists.pack(anchor= 'sw', pady= 1)
+		# Button to open the additional help window
+
+		self.moreHelp = tk.Button(self.HelpWindow, bg='red', fg= 'white', font=("Gotham Medium typeface", 19, "bold"))
+		self.moreHelp['text'] = 'For more help,\nclick here'
+		self.moreHelp['command'] = self.openMoreHelp
+		self.moreHelp.pack(anchor='center', pady= 10)
+
+		
+
+	# More help window where we can have a labeled image of what each button does
+	def openMoreHelp(self):
+		self.moreHelpWindow = Toplevel(root)
+		self.moreHelpWindow.title("More Help")
+		width= root.winfo_screenwidth() 
+		height= root.winfo_screenheight()
+		self.moreHelpWindow.geometry("%dx%d" % (width, height))
+
+		self.moreHelpWindow['bg'] = 'black'
+
+	
 	
   #endregion
 
