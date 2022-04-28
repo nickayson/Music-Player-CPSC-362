@@ -23,12 +23,12 @@ Make Library Page
 	Have it display all of the folders with mp3 files in it
 	Have it display all of the mp3 files under those folders
 
-Make back button to go back to previous windows
+Make back button to go back to previous windows (to do last)
 
 Make Help Page
 look nicer with similar formatting to the help page
 
-Also seperate new windows into new classes and different files so it looks nicer
+Also seperate new windows into new classes and different files so it looks nicer (to do last)
 
 '''
 muted = FALSE
