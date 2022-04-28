@@ -18,15 +18,18 @@ from mutagen import MutagenError
 
 '''
 THINGS TO DO:
-Change play buttons, etc
 
-Make Login Page
- 
-Make Library Page
+Make Library Page 
+	Have it display all of the folders with mp3 files in it
+	Have it display all of the mp3 files under those folders
 
-Make Queue Page
+Make back button to go back to previous windows
 
 Make Help Page
+look nicer with similar formatting to the help page
+
+Also seperate new windows into new classes and different files so it looks nicer
+
 '''
 muted = FALSE
 class Player(tk.Frame): 
