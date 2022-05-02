@@ -1,10 +1,10 @@
 ("C:\\Users\\Nick's "
  'Laptop\\OneDrive\\Desktop\\Music-Player-CPSC-362\\dist\\player.exe',
- True,
+ False,
  False,
  False,
  "C:\\Users\\Nick's "
- 'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PyInstaller\\bootloader\\images\\icon-console.ico',
+ 'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PyInstaller\\bootloader\\images\\icon-windowed.ico',
  None,
  False,
  False,
@@ -15803,8 +15803,8 @@
  [],
  False,
  False,
- 1651534397,
- [('run.exe',
+ 1651534828,
+ [('runw.exe',
    "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit\\run.exe',
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit\\runw.exe',
    'EXECUTABLE')])
