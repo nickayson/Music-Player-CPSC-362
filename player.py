@@ -7,15 +7,23 @@ import time
 from tkinter import *
 from tkinter import ttk
 from tkinter import font
-from turtle import bgcolor, color
+from turtle import bgcolor, color, home
 from ttkthemes import ThemedTk
 from tkinter import filedialog
 from tkinter import PhotoImage
 from pygame import mixer
 
+from home import HomePage
+from help import HelpPage
+from library import LibraryPage
+from queue import QueuePage
+from main import *
+
 from mutagen.mp3 import MP3
 from mutagen.oggvorbis import OggVorbis
 from mutagen import MutagenError
+
+from queue import QueuePage
 
 '''
 THINGS TO DO:
@@ -379,230 +387,48 @@ class Player(tk.Frame):
     #region Left Buttons
 	def nav_widgets(self):
 		#HOME
-		self.homePage = ttk.Button(self.nav, style = 'TButton', command = self.openHomeWindow )
+		self.homePage = ttk.Button(self.nav, style = 'TButton', command = self.HomeWindow)
 		self.homePage['text'] = 'Home'
 		# self.homePage['command'] = self.go_home
 		self.homePage.grid(row=0, column=0, padx=10, pady=10)
 
 		#QUEUE
-		self.queuePage = ttk.Button(self.nav, style = 'TButton', command = self.openQueueWindow)
+		self.queuePage = ttk.Button(self.nav, style = 'TButton', command = self.QueueWindow)
 		self.queuePage['text'] = 'Queue'
 		self.queuePage.grid(row=2, column=0, padx=10, pady=5)
   
 		#LIBRARY
-		self.libPage = ttk.Button(self.nav, style = 'TButton', command = self.openLibraryWindow)
+		self.libPage = ttk.Button(self.nav, style = 'TButton', command = self.LibraryWindow)
 		self.libPage['text'] = 'Library'
 		# self.libPage['command'] = self.go_lib
 		self.libPage.grid(row=3, column=0, padx=10, pady=5)
   
 		#HELP
-		self.helpPage = ttk.Button(self.nav, style = 'TButton', command = self.openHelpWindow)
+		self.helpPage = ttk.Button(self.nav, style = 'TButton', command = self.HelpWindow)
 		self.helpPage['text'] = 'Help'
 		# self.helpPage['command'] = self.go_help
 		self.helpPage.grid(row=4, column=0, padx=10, pady=5)
  	 #endregion
   
-    #region NEW WINDOWS
-	# function to open a Queue Window
-	def openHomeWindow(self):
-		self.HomeWindow = Toplevel(root)
-		self.HomeWindow.title("Home")
-		width= root.winfo_screenwidth() 
-		height= root.winfo_screenheight()
-		self.HomeWindow.geometry("%dx%d" % (width, height))
-
-		self.HomeWindow['bg'] = 'black'
-
-		self.image = tk.Label(self.HomeWindow, image=img)
-		self.image.configure(width=525, height=400)
-		self.image.grid(row=2,column=0)
-		# Create text widget and specify size.
+    # region NEW WINDOWS
+	def HomeWindow(self):
+		HomePage.openHomeWindow(self)
   
-		self.Home = tk.Text(self.HomeWindow, bg = 'black', fg = 'white', font=("Gotham Medium typeface",16,"bold"))	
-		#Put in text description of what the software does and why we created it with the logo.png photo
-		Description = """Creating a user friendly software that allows users to play music easily in any environment.\nThe main purpose of this software is to play music from local files with many features such as creating playlists,\nfavoriting a song, creating a queue, and many more."""
-		self.Home.config(width=100,height=10)
-		self.Home.grid(row=0, column=0, padx=10)
-  
-		self.Home.insert(tk.END, Description)
-  
-	def openQueueWindow(self):
-		self.QueueWindow = Toplevel(root)
-		self.QueueWindow.title("Queue")
-		width= root.winfo_screenwidth() 
-		height= root.winfo_screenheight()
-		self.QueueWindow.geometry("%dx%d" % (width, height))
-
-		self.QueueWindow['bg'] = 'black'
-
-		#Load button
-		self.loadSongs = ttk.Button(self.QueueWindow, style = 'TButton')
-		self.loadSongs['text'] = 'Load Songs'
-		self.loadSongs['command'] = self.retrieve_songs
-		self.loadSongs.grid(row=0, column=0, pady=1)
-  
-		label5 = tk.Label(self.QueueWindow, bg = 'black', fg = 'white', font=("Gotham Medium typeface",16,"bold"), text='Queue')
-		self.tracklist = ttk.LabelFrame(self.QueueWindow, labelwidget=label5)
-		# self.tracklist.config(width=1200,height=600)
-		self.tracklist.grid(row=5, column=0, rowspan=3, pady=5)
-		
-		# scroll bar w
-		self.scrollbar = ttk.Scrollbar(self.tracklist, orient=tk.VERTICAL)
-		self.scrollbar.grid(row=0, column=5, rowspan=5, sticky='ns')
-
-		#ListBox
-		self.list = tk.Listbox(self.tracklist, selectmode=tk.SINGLE, yscrollcommand=self.scrollbar.set, selectbackground='sky blue'
-                         ,bg = 'black', fg = 'white')
-		self.enumerate_songs()
-		self.list.config(width=200,height=35)
-		self.list.bind('<Double-1>', self.play_song) 
-
-		self.scrollbar.config(command=self.list.yview)
-		self.list.grid(row=0, column=0, rowspan=5)
+	def QueueWindow(self):
+		QueuePage.openQueueWindow(self)
   
 	# function to open a Library Window
-	def openLibraryWindow(self):
-     #Display Playslists by searching through file explorer Directory
-		self.LibraryWindow = Toplevel(root)
-		self.LibraryWindow.title("Library")
-		width= root.winfo_screenwidth() 
-		height= root.winfo_screenheight()
-		self.LibraryWindow.geometry("%dx%d" % (width, height))
-
-		# #Load button
-		# self.loadSongs = ttk.Button(self.LibraryWindow, style = 'TButton')
-		# self.loadSongs['text'] = 'Load Songs'
-		# self.loadSongs['command'] = self.retrieve_songs
-		# self.loadSongs.grid(row=0, column=0, pady=1)
-
-		# label5 = tk.Label(self.LibraryWindow, bg = 'black', fg = 'white', font=("Gotham Medium typeface",16,"bold"), text='Your Music Library')
-		# self.library = ttk.LabelFrame(self.LibraryWindow, labelwidget=label5)
-		# # self.tracklist.config(width=1200,height=600)
-		# self.library.grid(row=5, column=0, rowspan=3, pady=5)
-		
-		# # scroll bar w
-		# self.scrollbar = ttk.Scrollbar(self.library, orient=tk.VERTICAL)
-		# self.scrollbar.grid(row=0, column=5, rowspan=5, sticky='ns')
-
-		# #ListBox
-		# self.list = tk.Listbox(self.library, selectmode=tk.SINGLE, yscrollcommand=self.scrollbar.set, selectbackground='sky blue'
-        #                  ,bg = 'black', fg = 'white')
-		
-
-		## # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  ##
-		## Do something like a for loop to go through the number of folders we have in the music library directory? ##
-		## The library directory should be the same as the filepath of an .mp3 in the queue, except just minus the  ##
-		## song and playlist folder(?). I.e., if the path of a song in the queue is something like:                 ##
-		## "User1/Desktop/Music_Library/Playlist1/song1.mp3", all we would have to do is go two directories up or   ##
-		## erase the last two filepaths on the end to find the directory that is the music library with all of the  ##
-		## folders of songs, which is what the library page wants. I think once we have the filepath of the music   ##
-		## library, we just have to use a for loop to loop through the number of folders at that directory and then ##
-		## use the same enumerate_songs function on each folder inside the loop. I think this could work, but I'm   ##
-		## not entirely sure how to implement looping through the files at a directory given the path. Removing the ##
-		## song name and folder name from the filepath shouldn't be too difficult, I'm going to work on this later  ##
-		## today (5/1) and tomorrow (5/2) and then see if I can get the filepath working with help from you all.    ##
-		## # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  ## 
-		# self.enumerate_songs()
-		# self.list.config(width=200,height=35)
-		# self.list.bind('<Double-1>', self.play_song) 
-
-		# self.scrollbar.config(command=self.list.yview)
-		# self.list.grid(row=0, column=0, rowspan=5)
+	def LibraryWindow(self):
+		LibraryPage.openLibraryWindow(self)
   
-	
 	# function to open a Help Window
-	def openHelpWindow(self):
-     # Instructions for each button and how to navigate around the app
-		self.HelpWindow = Toplevel(root)
-		self.HelpWindow.title("Help")
-		width= root.winfo_screenwidth() 
-		height= root.winfo_screenheight()
-		self.HelpWindow.geometry("%dx%d" % (width, height))
-		self.HelpWindow['bg'] = 'black'
-		
-		# These values help calculate the correct font size for the screen so that all text will be displayed
-		w_h_ratio = (width / height) * 10000
-		text_length = 0
-		font_size = 0
-		# two options: define x here as 3.348 or wait until after mute button info to calculate
-		# Used to adjust ratio for text size
-		x = 3.348
-		font_size = 0
-		# Overall title for the help page
-		self.helpTitle = tk.Label(self.HelpWindow, bg = 'black', fg = 'white', font=("Gotham Medium typeface",22,"bold")
-                            , text="Welcome to the Help Page" )	
-		# Anchor to North point on page (top center)
-		self.helpTitle.pack(anchor= 'n')
-
-		# Mute button function info
-		text_="""Mute button information:\nOur mute button will record your volume level from before mute was\nhit; this level will be restored upon being unmuted. The volume can be\nunmuted by interacting with any of the volume control buttons or the slider."""
-		text_length = len(text_)
-		font_size = int((w_h_ratio / text_length) / x)
-		self.muteInfo = tk.Label(self.HelpWindow, bg = 'blue', fg = 'white', font=("Gotham Medium typeface",font_size - 5,"bold"), text=text_) 
-		# Anchor label to NW corner (top left)
-		self.muteInfo.pack(anchor= 'nw')
-
-		# Info about viewing the music library
-		text_="""How to view your Library:\nYour music library comprises all of the songs that you have loaded into\nthe player from your device. You can view this by pressing the library\nbutton from the home screen. You can also sort your songs by different\ncriteria using the sort option(?). You can perform any normal actions\non these songs, such as adding to a playlist or the queue."""
-		text_length = len(text_)
-		font_size = int((w_h_ratio / text_length) / x)
-		self.LibraryInfo = tk.Label(self.HelpWindow, bg = 'purple', fg = 'white', font=("Gotham Medium typeface",font_size + 3,"bold"), text=text_)
-		# Anchor just below above Label
-		self.LibraryInfo.pack(anchor='ne', pady= 10)
-
-		# Info for how to load songs
-		text_= """Loading Songs:\nYou can easily add songs from your computer by uploading them as files.\nSimply click on the "Load Song" button to bring up a window from which you\ncan navigate through your files to find songs to upload. Once a song has\nbeen uploaded, it will appear in your library. There are additional 'Load\nSong' buttons on the Queue and Library Pages."""
-		text_length = len(text_)
-		font_size = int((w_h_ratio / text_length) / x)
-		self.about_loadsong = tk.Label(self.HelpWindow, bg = '#4AC1E1', fg = 'white', font=("Gotham Medium typeface",font_size + 3,"bold"), text= text_)	
-		# Anchor label to West point (middle left)
-		self.about_loadsong.pack(anchor= 'w', pady= 1)
-
-		# Information about the Queue
-		text_= """Queue Information:\nYou can view your current queue by pressing the queue button on the\nhomepage. This will bring up a new window that will show what songs\nare next to be played and in what order they will be played."""
-		text_length = len(text_)
-		font_size = int((w_h_ratio / text_length) / x)
-		self.queueInfo = tk.Label(self.HelpWindow, bg= 'green', fg = 'white', font=("Gotham Medium typeface",font_size - 5,"bold"), text= text_)
-		# Anchor label to E corner (middle right)
-		self.queueInfo.pack(anchor= 'e', pady= 10)
-
-		# Label that tells how to make playlists
-		text_ = """Creating a Playlist:\nNot sure if we are implementing this button, so this is just a placeholder for now.\n\n"""
-		text_length = len(text_)
-		font_size = int((w_h_ratio / text_length) / x)
-		self.creatingPlaylists = tk.Label(self.HelpWindow, bg= '#E00DF9', fg = 'white', font=("Gotham Medium typeface",font_size - 30,"bold"), text=text_)
-		# Anchor label to E corner (middle right)
-		self.creatingPlaylists.pack(anchor= 'sw', pady= 1)
-		# Button to open the additional help window
-
-		self.moreHelp = tk.Button(self.HelpWindow, bg='#FF0000', fg= 'white', font=("Gotham Medium typeface", 13, "bold"))
-		self.moreHelp['text'] = 'For more help,\nclick here'
-		self.moreHelp['command'] = self.openMoreHelp
-		self.moreHelp.pack(anchor='center', pady= 10)
-
-		
-
-	# More help window where we can have a labeled image of what each button does
-	def openMoreHelp(self):
-		self.moreHelpWindow = Toplevel(root)
-		self.moreHelpWindow.title("More Help")
-		width= root.winfo_screenwidth() 
-		height= root.winfo_screenheight()
-		self.moreHelpWindow.geometry("%dx%d" % (width, height))
-
-		self.moreHelpWindow['bg'] = 'black'
-
-	
-	
+	def HelpWindow(self):
+		HelpPage.openHelpWindow(self)
   #endregion
 
-#variables called into main
-root = tk.Tk()
-img = PhotoImage(file='images/Logo.png')
-next_ = PhotoImage(file = 'images/next.gif')
-prev = PhotoImage(file='images/previous.gif')
-play = PhotoImage(file='images/play.gif')
-pause = PhotoImage(file='images/pause.gif')
-loadsongs = PhotoImage(file= 'images/loadsongs.png')
+#app to be deployed
+app = Player(master=root)
+app['bg'] = 'black'
+app.mainloop()
 #add image variable here
   

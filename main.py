@@ -12,15 +12,15 @@ from tkinter import filedialog
 from tkinter import PhotoImage
 from pygame import mixer
 
-from player import Player
-from player import *
-
 #region Main
 # ----------------------------- Main -------------------------------------------
+root = tk.Tk()
+
 # Dimensions of app
 width= root.winfo_screenwidth() 
 height= root.winfo_screenheight()
 
+#root bottom of player
 root.geometry("%dx%d" % (width, height))
 
 # Title on top right of app window
@@ -28,8 +28,12 @@ root.wm_title('CRINGE')
 
 root['bg'] = 'black'
 
-app = Player(master=root)
-app['bg'] = 'black'
-app.mainloop()
+img = PhotoImage(file='images/Logo.png')
+next_ = PhotoImage(file = 'images/next.gif')
+prev = PhotoImage(file='images/previous.gif')
+play = PhotoImage(file='images/play.gif')
+pause = PhotoImage(file='images/pause.gif')
+loadsongs = PhotoImage(file= 'images/loadsongs.png')
+
 #endregion
 
