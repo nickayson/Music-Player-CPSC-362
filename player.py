@@ -6,6 +6,7 @@ import time
 
 from tkinter import *
 from tkinter import ttk
+from tkinter import font
 from turtle import bgcolor, color
 from ttkthemes import ThemedTk
 from tkinter import filedialog
@@ -467,6 +468,47 @@ class Player(tk.Frame):
 		width= root.winfo_screenwidth() 
 		height= root.winfo_screenheight()
 		self.LibraryWindow.geometry("%dx%d" % (width, height))
+
+		# #Load button
+		# self.loadSongs = ttk.Button(self.LibraryWindow, style = 'TButton')
+		# self.loadSongs['text'] = 'Load Songs'
+		# self.loadSongs['command'] = self.retrieve_songs
+		# self.loadSongs.grid(row=0, column=0, pady=1)
+
+		# label5 = tk.Label(self.LibraryWindow, bg = 'black', fg = 'white', font=("Gotham Medium typeface",16,"bold"), text='Your Music Library')
+		# self.library = ttk.LabelFrame(self.LibraryWindow, labelwidget=label5)
+		# # self.tracklist.config(width=1200,height=600)
+		# self.library.grid(row=5, column=0, rowspan=3, pady=5)
+		
+		# # scroll bar w
+		# self.scrollbar = ttk.Scrollbar(self.library, orient=tk.VERTICAL)
+		# self.scrollbar.grid(row=0, column=5, rowspan=5, sticky='ns')
+
+		# #ListBox
+		# self.list = tk.Listbox(self.library, selectmode=tk.SINGLE, yscrollcommand=self.scrollbar.set, selectbackground='sky blue'
+        #                  ,bg = 'black', fg = 'white')
+		
+
+		## # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  ##
+		## Do something like a for loop to go through the number of folders we have in the music library directory? ##
+		## The library directory should be the same as the filepath of an .mp3 in the queue, except just minus the  ##
+		## song and playlist folder(?). I.e., if the path of a song in the queue is something like:                 ##
+		## "User1/Desktop/Music_Library/Playlist1/song1.mp3", all we would have to do is go two directories up or   ##
+		## erase the last two filepaths on the end to find the directory that is the music library with all of the  ##
+		## folders of songs, which is what the library page wants. I think once we have the filepath of the music   ##
+		## library, we just have to use a for loop to loop through the number of folders at that directory and then ##
+		## use the same enumerate_songs function on each folder inside the loop. I think this could work, but I'm   ##
+		## not entirely sure how to implement looping through the files at a directory given the path. Removing the ##
+		## song name and folder name from the filepath shouldn't be too difficult, I'm going to work on this later  ##
+		## today (5/1) and tomorrow (5/2) and then see if I can get the filepath working with help from you all.    ##
+		## # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  ## 
+		# self.enumerate_songs()
+		# self.list.config(width=200,height=35)
+		# self.list.bind('<Double-1>', self.play_song) 
+
+		# self.scrollbar.config(command=self.list.yview)
+		# self.list.grid(row=0, column=0, rowspan=5)
+  
 	
 	# function to open a Help Window
 	def openHelpWindow(self):
@@ -476,48 +518,64 @@ class Player(tk.Frame):
 		width= root.winfo_screenwidth() 
 		height= root.winfo_screenheight()
 		self.HelpWindow.geometry("%dx%d" % (width, height))
-
 		self.HelpWindow['bg'] = 'black'
-
+		
+		# These values help calculate the correct font size for the screen so that all text will be displayed
+		w_h_ratio = (width / height) * 10000
+		text_length = 0
+		font_size = 0
+		# two options: define x here as 3.348 or wait until after mute button info to calculate
+		# Used to adjust ratio for text size
+		x = 3.348
+		font_size = 0
 		# Overall title for the help page
-		self.helpTitle = tk.Label(self.HelpWindow, bg = 'black', fg = 'white', font=("Gotham Medium typeface",20,"bold")
+		self.helpTitle = tk.Label(self.HelpWindow, bg = 'black', fg = 'white', font=("Gotham Medium typeface",22,"bold")
                             , text="Welcome to the Help Page" )	
 		# Anchor to North point on page (top center)
 		self.helpTitle.pack(anchor= 'n')
 
 		# Mute button function info
-		self.muteInfo = tk.Label(self.HelpWindow, bg = 'blue', fg = 'white', font=("Gotham Medium typeface",10,"bold"),
-                          text="""Mute button information:\nOur mute button will record your volume level from before mute was\nhit; this level will be restored upon being unmuted. The volume can be\nunmuted by interacting with any of the volume control buttons or the slider.""")
+		text_="""Mute button information:\nOur mute button will record your volume level from before mute was\nhit; this level will be restored upon being unmuted. The volume can be\nunmuted by interacting with any of the volume control buttons or the slider."""
+		text_length = len(text_)
+		font_size = int((w_h_ratio / text_length) / x)
+		self.muteInfo = tk.Label(self.HelpWindow, bg = 'blue', fg = 'white', font=("Gotham Medium typeface",font_size - 5,"bold"), text=text_) 
 		# Anchor label to NW corner (top left)
 		self.muteInfo.pack(anchor= 'nw')
 
 		# Info about viewing the music library
-		self.LibraryInfo = tk.Label(self.HelpWindow, bg = 'purple', fg = 'white', font=("Gotham Medium typeface",10,"bold"), 
-		             text="""How to view your Library:\nYour music library comprises all of the songs that you have loaded into\nthe player from your device. You can view this by pressing the library\nbutton from the home screen. You can also sort your songs by different\ncriteria using the sort option(?). You can perform any normal actions\non these songs, such as adding to a playlist or the queue.""")
+		text_="""How to view your Library:\nYour music library comprises all of the songs that you have loaded into\nthe player from your device. You can view this by pressing the library\nbutton from the home screen. You can also sort your songs by different\ncriteria using the sort option(?). You can perform any normal actions\non these songs, such as adding to a playlist or the queue."""
+		text_length = len(text_)
+		font_size = int((w_h_ratio / text_length) / x)
+		self.LibraryInfo = tk.Label(self.HelpWindow, bg = 'purple', fg = 'white', font=("Gotham Medium typeface",font_size + 3,"bold"), text=text_)
 		# Anchor just below above Label
 		self.LibraryInfo.pack(anchor='ne', pady= 10)
 
-
-
 		# Info for how to load songs
-		self.about_loadsong = tk.Label(self.HelpWindow, bg = 'cyan', fg = 'white', font=("Gotham Medium typeface",10,"bold"),
-		            text= """Loading Songs:\nYou can easily add songs from your computer by uploading them as files.\nSimply click on the "Load Song" button to bring up a window from which you\ncan navigate through your files to find songs to upload. Once a song has\nbeen uploaded, it will appear in your library. There are additional 'Load\nSong' buttons on the Queue and Library Pages.""")	
+		text_= """Loading Songs:\nYou can easily add songs from your computer by uploading them as files.\nSimply click on the "Load Song" button to bring up a window from which you\ncan navigate through your files to find songs to upload. Once a song has\nbeen uploaded, it will appear in your library. There are additional 'Load\nSong' buttons on the Queue and Library Pages."""
+		text_length = len(text_)
+		font_size = int((w_h_ratio / text_length) / x)
+		self.about_loadsong = tk.Label(self.HelpWindow, bg = '#4AC1E1', fg = 'white', font=("Gotham Medium typeface",font_size + 3,"bold"), text= text_)	
 		# Anchor label to West point (middle left)
 		self.about_loadsong.pack(anchor= 'w', pady= 1)
 
 		# Information about the Queue
-		self.queueInfo = tk.Label(self.HelpWindow, bg= 'green', fg = 'white', font=("Gotham Medium typeface",10,"bold"),
-		             text= """Queue Information:\nYou can view your current queue by pressing the queue button on the\nhomepage. This will bring up a new window that will show what songs\nare next to be played and in what order they will be played.""")
+		text_= """Queue Information:\nYou can view your current queue by pressing the queue button on the\nhomepage. This will bring up a new window that will show what songs\nare next to be played and in what order they will be played."""
+		text_length = len(text_)
+		font_size = int((w_h_ratio / text_length) / x)
+		self.queueInfo = tk.Label(self.HelpWindow, bg= 'green', fg = 'white', font=("Gotham Medium typeface",font_size - 5,"bold"), text= text_)
 		# Anchor label to E corner (middle right)
 		self.queueInfo.pack(anchor= 'e', pady= 10)
 
-		self.creatingPlaylists = tk.Label(self.HelpWindow, bg= 'magenta', fg = 'white', font=("Gotham Medium typeface",10,"bold"),
-		             text= """Creating a Playlist:\nNot sure if we are implementing this button, so this is just a placeholder for now.\n\n""")
+		# Label that tells how to make playlists
+		text_ = """Creating a Playlist:\nNot sure if we are implementing this button, so this is just a placeholder for now.\n\n"""
+		text_length = len(text_)
+		font_size = int((w_h_ratio / text_length) / x)
+		self.creatingPlaylists = tk.Label(self.HelpWindow, bg= '#E00DF9', fg = 'white', font=("Gotham Medium typeface",font_size - 30,"bold"), text=text_)
 		# Anchor label to E corner (middle right)
 		self.creatingPlaylists.pack(anchor= 'sw', pady= 1)
 		# Button to open the additional help window
 
-		self.moreHelp = tk.Button(self.HelpWindow, bg='#FF0000', fg= 'white', font=("Gotham Medium typeface", 15, "bold"))
+		self.moreHelp = tk.Button(self.HelpWindow, bg='#FF0000', fg= 'white', font=("Gotham Medium typeface", 13, "bold"))
 		self.moreHelp['text'] = 'For more help,\nclick here'
 		self.moreHelp['command'] = self.openMoreHelp
 		self.moreHelp.pack(anchor='center', pady= 10)
