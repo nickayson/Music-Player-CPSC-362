@@ -16,14 +16,12 @@ from pygame import mixer
 from home import HomePage
 from help import HelpPage
 from library import LibraryPage
-from queue import QueuePage
+from qlist import QPage
 from main import *
 
 from mutagen.mp3 import MP3
 from mutagen.oggvorbis import OggVorbis
 from mutagen import MutagenError
-
-from queue import QueuePage
 
 '''
 THINGS TO DO:
@@ -196,12 +194,6 @@ class Player(tk.Frame):
 		self.mute['text'] = 'Mute'
 		self.mute['command'] = self.mute_volume   #need to create function
 		self.mute.grid(row=4, column=5, pady=5)
-
-		#VOLUME
-		self.volNum = ttk.Button(self.volumew, style = 'TButton')
-		self.volNum['text'] = 'Volume #' # '#' is placeholder for number input
-		# self.volDown['command'] = self.set_volume   #need to create function
-		self.volNum.grid(row=5, column=5, pady=5)
 	#endregion
 
     #region RETRIEVE SONGS
@@ -220,7 +212,7 @@ class Player(tk.Frame):
 		with open('songs.pickle', 'wb') as f:
 			pickle.dump(self.songlist, f)
 		self.playlist = self.songlist
-		# self.tracklist['text'] = f'PlayList - {str(len(self.playlist))}'
+		self.tracklist['text'] = f'PlayList - {str(len(self.playlist))}'
 		self.list.delete(0, tk.END)
 		self.enumerate_songs()
 	#endregion
@@ -415,7 +407,7 @@ class Player(tk.Frame):
 		HomePage.openHomeWindow(self)
   
 	def QueueWindow(self):
-		QueuePage.openQueueWindow(self)
+		QPage.openQueueWindow(self)
   
 	# function to open a Library Window
 	def LibraryWindow(self):
