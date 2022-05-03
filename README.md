@@ -1,6 +1,6 @@
 # Music-Player-CPSC-362
 
-![alt text](https://github.com/nickayson/Music-Player-CPSC-362/blob/main/images/Logo.png)
+![alt text](https://github.com/nickayson/Music-Player-CPSC-362/blob/main/images/logo.gif)
 
 TO RUN:   
 Please run the main.py file and it will pull up home screen for you  
