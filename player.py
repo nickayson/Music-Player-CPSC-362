@@ -31,12 +31,8 @@ Make Library Page
 	Have it display all of the mp3 files under those folders
 	Display both the folders and the individual mp3 files
 
-Make back button to go back to previous windows (to do last)
-
 Make Help Page
 look nicer with similar formatting to the help page
-
-Also seperate new windows into new classes and different files so it looks nicer (to do last)
 
 '''
 muted = FALSE
@@ -69,6 +65,9 @@ class Player(tk.Frame):
   
     #region CREATE_FRAMES
 	def create_frames(self):
+    	# REMOVE SONGS
+		self.remove_songs()
+
     #  CREATES ALL OF THE FRAMES
 		s1 = ttk.Style()
 		s1.theme_use('clam')
@@ -216,6 +215,40 @@ class Player(tk.Frame):
 		self.list.delete(0, tk.END)
 		self.enumerate_songs()
 	#endregion
+ 
+	#region Library search
+	def searchfiles(self):
+		self.liblist = []
+		directory = filedialog.askdirectory()
+		count = 0
+		
+		for root_, dirs, files in os.walk(directory):
+			for file in files:
+				if os.path.splitext(file)[1] == '.mp3':
+						self.folderpath = root_
+						global path
+						path = (root_ + '/' + file).replace('\\','/')
+						# self.liblist.append(self.folderpath2)
+						self.liblist.append(path)
+						count += 1
+				if count == 0:
+					self.folderpath2 = root_
+					string = "----------------------------" + self.folderpath2 + "----------------------------"
+					self.liblist.append(string)
+		with open('songs.pickle', 'wb') as f:
+			pickle.dump(self.liblist, f)
+		self.playlist = self.liblist
+		self.list.delete(0, tk.END)
+		self.enumerate_songs()
+	#endregion
+ 
+	#region REMOVE SONGS
+	def remove_songs(self):
+		self.empty = []
+		with open('filename', 'wb') as f:
+			pickle.dump(self.empty, f)
+		self.playlist = self.empty
+	#endregion
 
 	#region ENUMERATE SONGS
 	def enumerate_songs(self):
@@ -228,7 +261,7 @@ class Player(tk.Frame):
 		if event is not None:
 			self.current = self.list.curselection()[0]
 			for i in range(len(self.playlist)):
-				self.list.itemconfigure(i, bg="white")
+				self.list.itemconfigure(i)
     
 		print(self.playlist[self.current])
 		mixer.music.load(self.playlist[self.current])
@@ -407,10 +440,12 @@ class Player(tk.Frame):
 		HomePage.openHomeWindow(self)
   
 	def QueueWindow(self):
+		self.remove_songs()
 		QPage.openQueueWindow(self)
   
 	# function to open a Library Window
 	def LibraryWindow(self):
+		self.remove_songs()
 		LibraryPage.openLibraryWindow(self)
   
 	# function to open a Help Window
@@ -422,5 +457,5 @@ class Player(tk.Frame):
 app = Player(master=root)
 app['bg'] = 'black'
 app.mainloop()
-#add image variable here
+
   

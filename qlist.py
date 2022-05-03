@@ -37,8 +37,8 @@ class QPage:
         self.scrollbar.grid(row=0, column=5, rowspan=5, sticky='ns')
 
 		#ListBox
-        self.list = tk.Listbox(self.tracklist, selectmode=tk.SINGLE, yscrollcommand=self.scrollbar.set, selectbackground='sky blue'
-                         ,bg = 'black', fg = 'white')
+        self.list = tk.Listbox(self.tracklist, selectmode=tk.SINGLE, yscrollcommand=self.scrollbar.set,
+                         bg = 'black', fg = 'white')
         self.enumerate_songs()
         self.list.config(width=200,height=35)
         self.list.bind('<Double-1>', self.play_song) 

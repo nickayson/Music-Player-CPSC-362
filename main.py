@@ -28,6 +28,7 @@ root.wm_title('CRINGE')
 
 root['bg'] = 'black'
 
+sound = PhotoImage(file='images/sounds.gif')
 img = PhotoImage(file='images/Logo.gif')
 next_ = PhotoImage(file = 'images/next.gif')
 prev = PhotoImage(file='images/previous.gif')
