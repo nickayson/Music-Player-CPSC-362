@@ -54,7 +54,9 @@ class Player(tk.Frame):
 		self.paused = True
 		self.played = False
 		self.folderpath = ""
-
+		
+		self.read_folderpath()
+		self.reload_songs()
 		self.create_frames()
 		self.track_widgets()
 		self.control_widgets()
@@ -203,7 +205,7 @@ class Player(tk.Frame):
 		for root_, dirs, files in os.walk(directory):
 				for file in files:
 					if os.path.splitext(file)[1] == '.mp3':
-						self.folderpath = root_
+						self.set_folderpath(root_)
 						global path
 						path = (root_ + '/' + file).replace('\\','/')
 						self.songlist.append(path)
@@ -215,6 +217,40 @@ class Player(tk.Frame):
 		self.list.delete(0, tk.END)
 		self.enumerate_songs()
 	#endregion
+
+	#region RELOAD SONGS
+	def reload_songs(self):
+		if(self.folderpath != ""):
+			self.songlist = []
+			for root_, dirs, files in os.walk(self.folderpath):
+					for file in files:
+						if os.path.splitext(file)[1] == '.mp3':
+							global path
+							path = (root_ + '/' + file).replace('\\','/')
+							self.songlist.append(path)
+
+			with open('songs.pickle', 'wb') as f:
+				pickle.dump(self.songlist, f)
+			self.playlist = self.songlist
+			self.tracklist['text'] = f'PlayList - {str(len(self.playlist))}'
+			self.list.delete(0, tk.END)
+			self.enumerate_songs()
+	#endregion 
+
+	#region GET FOLDER PATH
+	def read_folderpath(self):
+		with open('folder_path.txt', 'r') as f:
+			data = f.read()
+			if data:
+				self.folderpath = data
+	#endregion
+
+	#region SAVE FOLDER PATH
+	def set_folderpath(self, path):
+		self.folderpath = path
+		with open('folder_path.txt', 'w') as f:
+			f.write(path)
+	#endregion
  
 	#region Library search
 	def searchfiles(self):
@@ -225,7 +261,7 @@ class Player(tk.Frame):
 		for root_, dirs, files in os.walk(directory):
 			for file in files:
 				if os.path.splitext(file)[1] == '.mp3':
-						self.folderpath = root_
+						self.set_folderpath(root_)
 						global path
 						path = (root_ + '/' + file).replace('\\','/')
 						# self.liblist.append(self.folderpath2)
