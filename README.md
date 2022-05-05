@@ -1,4 +1,7 @@
 # Music-Player-CPSC-362
+Creating a user friendly software that allows users to play music easily in any environment.The main purpose of this software is to play music from local files with many features, viewing a queue of songs, a library to list all of the songs and folders, and many more.  
+
+![alt text](https://github.com/nickayson/Music-Player-CPSC-362/blob/main/images/Logo.gif)
 
 ## Team members and emails
    
@@ -8,8 +11,6 @@ seanisaac2001@gmail.com
 jacobre60@gmail.com
 w.wyatt.allen99@gmail.com
 ```
-   
-![alt text](https://github.com/nickayson/Music-Player-CPSC-362/blob/main/images/Logo.gif)
 
 ## How to compile and execute
 
