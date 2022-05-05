@@ -197,12 +197,14 @@ class Player(tk.Frame):
 						path = (root_ + '/' + file).replace('\\','/')
 						self.songlist.append(path)
 
+
 		with open('songs.pickle', 'wb') as f:
 			pickle.dump(self.songlist, f)
 		self.playlist = self.songlist
 		self.tracklist['text'] = f'PlayList - {str(len(self.playlist))}'
 		self.list.delete(0, tk.END)
 		self.enumerate_songs()
+		self.play_song()
 	#endregion
 
 	#region GET FOLDER PATH
@@ -266,6 +268,7 @@ class Player(tk.Frame):
 			self.current = self.list.curselection()[0]
 			for i in range(len(self.playlist)):
 				self.list.itemconfigure(i)
+				
     
 		print(self.playlist[self.current])
 		mixer.music.load(self.playlist[self.current])
@@ -400,6 +403,9 @@ class Player(tk.Frame):
   
 		# update time
 		self.status_bar.after(1000, self.play_time)
+  
+		if converted_current_time == converted_song_length:
+			self.next_song()
 	#endregion
 
 	#region Progress bar
