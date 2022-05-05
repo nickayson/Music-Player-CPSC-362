@@ -26,3 +26,8 @@ Or open the player.exe file in file explorer
 
 ## UI Screens
 
+![alt text](https://github.com/nickayson/Music-Player-CPSC-362/blob/main/uiscreens/CRINGE%205_4_2022%208_43_07%20PM.png)
+![alt text](https://github.com/nickayson/Music-Player-CPSC-362/blob/main/uiscreens/Home%205_4_2022%208_43_30%20PM.png)
+![alt text](https://github.com/nickayson/Music-Player-CPSC-362/blob/main/uiscreens/Library%205_4_2022%208_44_24%20PM.png)
+![alt text](https://github.com/nickayson/Music-Player-CPSC-362/blob/main/uiscreens/Queue%205_4_2022%208_44_05%20PM.png)
+
