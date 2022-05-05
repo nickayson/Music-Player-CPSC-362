@@ -10,7 +10,8 @@ The main purpose of this software is to play music from local files with many fe
 
 ## Team members and emails
    
-```aysonnicholas@gmail.com  
+```
+aysonnicholas@gmail.com  
 ashleythorlin@gmail.com
 seanisaac2001@gmail.com
 jacobre60@gmail.com
