@@ -23,18 +23,6 @@ from mutagen.mp3 import MP3
 from mutagen.oggvorbis import OggVorbis
 from mutagen import MutagenError
 
-'''
-THINGS TO DO:
-
-Make Library Page 
-	Have it display all of the folders with mp3 files in it
-	Have it display all of the mp3 files under those folders
-	Display both the folders and the individual mp3 files
-
-Make Help Page
-look nicer with similar formatting to the help page
-
-'''
 muted = FALSE
 class Player(tk.Frame): 
     #region INIT
@@ -56,7 +44,7 @@ class Player(tk.Frame):
 		self.folderpath = ""
 		
 		self.read_folderpath()
-		self.reload_songs()
+		# self.reload_songs()
 		self.create_frames()
 		self.track_widgets()
 		self.control_widgets()
@@ -136,9 +124,8 @@ class Player(tk.Frame):
 	#region CONTROL_WIDGETS
 	def control_widgets(self):
 		#Load button
-		self.loadSongs = ttk.Button(self.controls, style = 'TButton')
+		self.loadSongs = ttk.Button(self.controls, style = 'TButton', command=lambda:[self.QueueWindow(), self.retrieve_songs()])
 		self.loadSongs['text'] = 'Load Songs'
-		self.loadSongs['command'] = self.retrieve_songs
 		self.loadSongs.grid(row=0, column=0, padx=10)
   
         #PREVIOUS
@@ -218,25 +205,6 @@ class Player(tk.Frame):
 		self.enumerate_songs()
 	#endregion
 
-	#region RELOAD SONGS
-	def reload_songs(self):
-		if(self.folderpath != ""):
-			self.songlist = []
-			for root_, dirs, files in os.walk(self.folderpath):
-					for file in files:
-						if os.path.splitext(file)[1] == '.mp3':
-							global path
-							path = (root_ + '/' + file).replace('\\','/')
-							self.songlist.append(path)
-
-			with open('songs.pickle', 'wb') as f:
-				pickle.dump(self.songlist, f)
-			self.playlist = self.songlist
-			self.tracklist['text'] = f'PlayList - {str(len(self.playlist))}'
-			self.list.delete(0, tk.END)
-			self.enumerate_songs()
-	#endregion 
-
 	#region GET FOLDER PATH
 	def read_folderpath(self):
 		with open('folder_path.txt', 'r') as f:
@@ -269,8 +237,8 @@ class Player(tk.Frame):
 						count += 1
 				if count == 0:
 					self.folderpath2 = root_
-					string = "----------------------------" + self.folderpath2 + "----------------------------"
-					self.liblist.append(string)
+					self.liblist.append(self.folderpath2)
+					self.liblist.append("============================================================================================")
 		with open('songs.pickle', 'wb') as f:
 			pickle.dump(self.liblist, f)
 		self.playlist = self.liblist
@@ -364,7 +332,7 @@ class Player(tk.Frame):
 			self.v = 0.0
 			mixer.music.set_volume((self.v)/10)
 		self.volume.set(self.v)
-		mixer.music.set_volume((self.v + 1)/10)
+		mixer.music.set_volume((self.v)/10)
 		print(self.v)
   
 	def change_volume(self, event=None):

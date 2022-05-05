@@ -1,5 +1,6 @@
 # pip install pygame
 # pip install mutagen
+# pyinstaller --onefile -w player.py
 
 import os
 import pickle
