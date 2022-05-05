@@ -1,6 +1,10 @@
 # Music-Player-CPSC-362
 Creating a user friendly software that allows users to play music easily in any environment.   
-The main purpose of this software is to play music from local files with many features: viewing a queue of songs, a library to list all of the songs and folders, Volume Control,  and Scrubbing through song.   
+The main purpose of this software is to play music from local files with many features: 
+- Viewing a queue of songs  
+- Library to list all of the songs and folders  
+- Volume Control   
+- Scrubbing through song     
   
 ![alt text](https://github.com/nickayson/Music-Player-CPSC-362/blob/main/images/Logo.gif)
 
