@@ -12,7 +12,9 @@ from pygame import mixer
 from main import *
 
 class Library:
+
     def openLibraryWindow(self):
+
         #Display Playslists by searching through file explorer Directory
         self.LibraryWindow = Toplevel(root)
         self.LibraryWindow.title("Library")
@@ -46,4 +48,13 @@ class Library:
 
         self.scrollbar.config(command=self.list.yview)
         self.list.grid(row=0, column=0, rowspan=5)
-		
+
+        self.reload_songs()
+
+        #pauses music when window is closed
+        def on_closing():
+            self.pause_song()
+            self.LibraryWindow.destroy()
+
+        self.LibraryWindow.protocol("WM_DELETE_WINDOW", on_closing)
+        self.LibraryWindow.mainloop()
