@@ -247,6 +247,33 @@ class Player(tk.Frame):
 		self.list.delete(0, tk.END)
 		self.enumerate_songs()
 	#endregion
+
+	#region RELOAD SONGS
+	def reload_songs(self):
+		if(self.folderpath != ""):
+			self.liblist = []
+			directory = self.folderpath
+			count = 0
+			
+			for root_, dirs, files in os.walk(directory):
+				for file in files:
+					if os.path.splitext(file)[1] == '.mp3':
+							self.set_folderpath(root_)
+							global path
+							path = (root_ + '/' + file).replace('\\','/')
+							# self.liblist.append(self.folderpath2)
+							self.liblist.append(path)
+							count += 1
+					if count == 0:
+						self.folderpath2 = root_
+						self.liblist.append(self.folderpath2)
+						self.liblist.append("============================================================================================")
+			with open('songs.pickle', 'wb') as f:
+				pickle.dump(self.liblist, f)
+			self.playlist = self.liblist
+			self.list.delete(0, tk.END)
+			self.enumerate_songs()
+	#endregion
  
 	#region REMOVE SONGS
 	def remove_songs(self):
@@ -416,6 +443,8 @@ class Player(tk.Frame):
 
 		mixer.music.load(song)
 		mixer.music.play(loops=0, start=int(self.slider_value.get()))
+		if(self.paused == True):
+			mixer.music.pause()
 
 	#endregion
  

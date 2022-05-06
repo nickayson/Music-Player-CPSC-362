@@ -45,3 +45,11 @@ class QPage:
 
         self.scrollbar.config(command=self.list.yview)
         self.list.grid(row=0, column=0, rowspan=5)
+
+        #pauses music when window is closed
+        def on_closing():
+            self.pause_song()
+            self.QueueWindow.destroy()
+
+        self.QueueWindow.protocol("WM_DELETE_WINDOW", on_closing)
+        self.QueueWindow.mainloop()
