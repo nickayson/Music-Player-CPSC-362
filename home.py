@@ -11,7 +11,7 @@ from pygame import mixer
 
 from main import *
 
-class HomePage:
+class Home:
     def openHomeWindow(self):
         self.HomeWindow = Toplevel(root)
         self.HomeWindow.title("Home")

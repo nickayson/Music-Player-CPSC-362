@@ -13,9 +13,9 @@ from tkinter import filedialog
 from tkinter import PhotoImage
 from pygame import mixer
 
-from home import HomePage
-from help import HelpPage
-from library import LibraryPage
+from home import Home
+from help import Help
+from library import Library
 from qlist import QPage
 from main import *
 
@@ -447,7 +447,7 @@ class Player(tk.Frame):
   
     # region NEW WINDOWS
 	def HomeWindow(self):
-		HomePage.openHomeWindow(self)
+		Home.openHomeWindow(self)
   
 	def QueueWindow(self):
 		self.remove_songs()
@@ -456,11 +456,11 @@ class Player(tk.Frame):
 	# function to open a Library Window
 	def LibraryWindow(self):
 		self.remove_songs()
-		LibraryPage.openLibraryWindow(self)
+		Library.openLibraryWindow(self)
   
 	# function to open a Help Window
 	def HelpWindow(self):
-		HelpPage.openHelpWindow(self)
+		Help.openHelpWindow(self)
   #endregion
 
 #app to be deployed

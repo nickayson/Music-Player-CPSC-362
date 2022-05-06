@@ -11,7 +11,7 @@ from pygame import mixer
 
 from main import *
 
-class HelpPage:
+class Help:
     def openHelpWindow(self):
          # Instructions for each button and how to navigate around the app
         self.HelpWindow = Toplevel(root)

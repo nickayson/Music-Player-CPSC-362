@@ -11,7 +11,7 @@ from pygame import mixer
 
 from main import *
 
-class LibraryPage:
+class Library:
     def openLibraryWindow(self):
         #Display Playslists by searching through file explorer Directory
         self.LibraryWindow = Toplevel(root)
