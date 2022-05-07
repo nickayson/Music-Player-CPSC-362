@@ -354,7 +354,7 @@ class Player(tk.Frame):
 			mixer.music.set_volume((self.v)/10)
 		self.volume.set(self.v)
 		mixer.music.set_volume((self.v - 1)/10)
-		print(self.v)
+		# print(self.v)
   
 	def decrease_volume(self, event=None):
 		self.v = self.volume.get() - 1
@@ -363,12 +363,12 @@ class Player(tk.Frame):
 			mixer.music.set_volume((self.v)/10)
 		self.volume.set(self.v)
 		mixer.music.set_volume((self.v)/10)
-		print(self.v)
+		# print(self.v)
   
 	def change_volume(self, event=None):
 		self.v = self.volume.get()
 		mixer.music.set_volume(self.v / 10)
-		print(self.v)
+		# print(self.v)
 
 	def mute_volume(self, event=None):
 		global muted
