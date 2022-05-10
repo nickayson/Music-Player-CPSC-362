@@ -592,29 +592,29 @@
    "C:\\Users\\Nick's "
    'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\__future__.py',
    'PYMODULE'),
-  ('pkg_resources._vendor',
+  ('pkg_resources._vendor.packaging.__about__',
    "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\__init__.py',
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\__about__.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.packaging._compat',
+  ('pkg_resources._vendor.packaging',
    "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_compat.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.packaging.markers',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\markers.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.packaging._typing',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_typing.py',
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\__init__.py',
    'PYMODULE'),
   ('pkg_resources._vendor.packaging.specifiers',
    "C:\\Users\\Nick's "
    'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\specifiers.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.appdirs',
+  ('pkg_resources._vendor.packaging._compat',
    "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\appdirs.py',
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_compat.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging.requirements',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\requirements.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging._structures',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_structures.py',
    'PYMODULE'),
   ('pkg_resources._vendor.packaging.tags',
    "C:\\Users\\Nick's "
@@ -692,6 +692,14 @@
    "C:\\Users\\Nick's "
    'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\distutils\\fancy_getopt.py',
    'PYMODULE'),
+  ('pkg_resources._vendor.appdirs',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\appdirs.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging._typing',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_typing.py',
+   'PYMODULE'),
   ('pkg_resources._vendor.pyparsing',
    "C:\\Users\\Nick's "
    'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\pyparsing.py',
@@ -707,10 +715,6 @@
   ('pydoc',
    "C:\\Users\\Nick's "
    'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\pydoc.py',
-   'PYMODULE'),
-  ('webbrowser',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\webbrowser.py',
    'PYMODULE'),
   ('http.server',
    "C:\\Users\\Nick's "
@@ -768,25 +772,17 @@
    "C:\\Users\\Nick's "
    'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\dataclasses.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.packaging._structures',
+  ('pkg_resources._vendor',
    "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\_structures.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.packaging',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\__init__.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.packaging.__about__',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\__about__.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.packaging.requirements',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\requirements.py',
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\__init__.py',
    'PYMODULE'),
   ('pkg_resources._vendor.packaging.utils',
    "C:\\Users\\Nick's "
    'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\utils.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging.markers',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\pkg_resources\\_vendor\\packaging\\markers.py',
    'PYMODULE'),
   ('sysconfig',
    "C:\\Users\\Nick's "
@@ -1031,6 +1027,10 @@
   ('home',
    "C:\\Users\\Nick's "
    'Laptop\\OneDrive\\Desktop\\Music-Player-CPSC-362\\home.py',
+   'PYMODULE'),
+  ('webbrowser',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\webbrowser.py',
    'PYMODULE'),
   ('pygame',
    "C:\\Users\\Nick's "
@@ -2076,109 +2076,97 @@
    "C:\\Users\\Nick's "
    'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\Image.py',
    'PYMODULE'),
-  ('PIL.DcxImagePlugin',
+  ('PIL.BufrStubImagePlugin',
    "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\DcxImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.ImImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\ImImagePlugin.py',
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\BufrStubImagePlugin.py',
    'PYMODULE'),
   ('PIL.ImageFile',
    "C:\\Users\\Nick's "
    'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\ImageFile.py',
    'PYMODULE'),
-  ('PIL.FtexImagePlugin',
+  ('PIL.PcdImagePlugin',
    "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\FtexImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.WmfImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\WmfImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.XpmImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\XpmImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.TgaImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\TgaImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.PsdImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\PsdImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.IcoImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\IcoImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.DdsImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\DdsImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.FpxImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\FpxImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.IcnsImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\IcnsImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.features',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\features.py',
-   'PYMODULE'),
-  ('PIL.MpoImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\MpoImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.FitsImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\FitsImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.MspImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\MspImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.PalmImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\PalmImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.CurImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\CurImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.MicImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\MicImagePlugin.py',
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\PcdImagePlugin.py',
    'PYMODULE'),
   ('PIL.Jpeg2KImagePlugin',
    "C:\\Users\\Nick's "
    'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\Jpeg2KImagePlugin.py',
    'PYMODULE'),
+  ('PIL.FliImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\FliImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.FitsImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\FitsImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.MpegImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\MpegImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.Hdf5StubImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\Hdf5StubImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.IptcImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\IptcImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.GribStubImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\GribStubImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.PcxImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\PcxImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.MspImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\MspImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.WmfImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\WmfImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.MicImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\MicImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.EpsImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\EpsImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.TgaImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\TgaImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.ImtImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\ImtImagePlugin.py',
+   'PYMODULE'),
   ('PIL.McIdasImagePlugin',
    "C:\\Users\\Nick's "
    'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\McIdasImagePlugin.py',
    'PYMODULE'),
-  ('PIL.PixarImagePlugin',
+  ('PIL.SunImagePlugin',
    "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\PixarImagePlugin.py',
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\SunImagePlugin.py',
    'PYMODULE'),
-  ('PIL.FliImagePlugin',
+  ('PIL.CurImagePlugin',
    "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\FliImagePlugin.py',
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\CurImagePlugin.py',
    'PYMODULE'),
   ('PIL.XbmImagePlugin',
    "C:\\Users\\Nick's "
    'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\XbmImagePlugin.py',
    'PYMODULE'),
-  ('PIL.XVThumbImagePlugin',
+  ('PIL.FpxImagePlugin',
    "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\XVThumbImagePlugin.py',
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\FpxImagePlugin.py',
    'PYMODULE'),
-  ('PIL.WebPImagePlugin',
+  ('PIL.BlpImagePlugin',
    "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\WebPImagePlugin.py',
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\BlpImagePlugin.py',
    'PYMODULE'),
   ('PIL.SpiderImagePlugin',
    "C:\\Users\\Nick's "
@@ -2187,38 +2175,6 @@
   ('PIL.ImageTk',
    "C:\\Users\\Nick's "
    'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\ImageTk.py',
-   'PYMODULE'),
-  ('PIL.GribStubImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\GribStubImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.Hdf5StubImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\Hdf5StubImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.BlpImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\BlpImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.GbrImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\GbrImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.PcdImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\PcdImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.SgiImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\SgiImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.EpsImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\EpsImagePlugin.py',
-   'PYMODULE'),
-  ('PIL.ImtImagePlugin',
-   "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\ImtImagePlugin.py',
    'PYMODULE'),
   ('PIL.PdfImagePlugin',
    "C:\\Users\\Nick's "
@@ -2232,29 +2188,73 @@
    "C:\\Users\\Nick's "
    'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\ImageSequence.py',
    'PYMODULE'),
-  ('PIL.SunImagePlugin',
+  ('PIL.PixarImagePlugin',
    "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\SunImagePlugin.py',
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\PixarImagePlugin.py',
    'PYMODULE'),
-  ('PIL.BufrStubImagePlugin',
+  ('PIL.XpmImagePlugin',
    "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\BufrStubImagePlugin.py',
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\XpmImagePlugin.py',
    'PYMODULE'),
-  ('PIL.PcxImagePlugin',
+  ('PIL.XVThumbImagePlugin',
    "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\PcxImagePlugin.py',
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\XVThumbImagePlugin.py',
    'PYMODULE'),
-  ('PIL.MpegImagePlugin',
+  ('PIL.SgiImagePlugin',
    "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\MpegImagePlugin.py',
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\SgiImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.ImImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\ImImagePlugin.py',
    'PYMODULE'),
   ('PIL.FitsStubImagePlugin',
    "C:\\Users\\Nick's "
    'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\FitsStubImagePlugin.py',
    'PYMODULE'),
-  ('PIL.IptcImagePlugin',
+  ('PIL.GbrImagePlugin',
    "C:\\Users\\Nick's "
-   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\IptcImagePlugin.py',
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\GbrImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.WebPImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\WebPImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.FtexImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\FtexImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.IcoImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\IcoImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.DdsImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\DdsImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.IcnsImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\IcnsImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.features',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\features.py',
+   'PYMODULE'),
+  ('PIL.PalmImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\PalmImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.DcxImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\DcxImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.PsdImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\PsdImagePlugin.py',
+   'PYMODULE'),
+  ('PIL.MpoImagePlugin',
+   "C:\\Users\\Nick's "
+   'Laptop\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\PIL\\MpoImagePlugin.py',
    'PYMODULE'),
   ('PIL.TiffImagePlugin',
    "C:\\Users\\Nick's "

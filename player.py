@@ -12,6 +12,7 @@ from ttkthemes import ThemedTk
 from tkinter import filedialog
 from tkinter import PhotoImage
 from pygame import mixer
+import webbrowser
 
 from home import Home
 from help import Help
@@ -447,6 +448,10 @@ class Player(tk.Frame):
 			mixer.music.pause()
 
 	#endregion
+ 
+	# Define a callback function
+	def callback(self, url):
+		webbrowser.open_new_tab(url)
  
     #region Left Buttons
 	def nav_widgets(self):
